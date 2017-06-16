@@ -184,20 +184,20 @@ myApp.service('_tournament', ['$http', function ($http) {
 myApp.controller('TableController', ['$scope', '_tournament', function ($scope, _tournament) {
     this.idFromParam = new URL(window.location.href).searchParams.get("ID");
 
-    var tournamentSettings
+    var tournamentSettings;
     _tournament.get(this.idFromParam, (function(response){
         tournamentSettings = response;
-        waitForAjax();
+        $scope.Tournament();
     }));
     
-    function waitForAjax() {
+    $scope.Tournament = function() {
 
         if (tournamentSettings === null || typeof tournamentSettings != "undefined") {
 
-            this.name = tournamentSettings.name;
-            this.playersArr = tournamentSettings.players;
+            $scope.name = tournamentSettings.name;
+            $scope.playersArr = tournamentSettings.players;
             this.fixures = [];
-            this.games = [];
+            $scope.games = [];
             this.groupFinished = false;
 
             this.RoundRobin = function (t) {
@@ -230,39 +230,41 @@ myApp.controller('TableController', ['$scope', '_tournament', function ($scope, 
                 return e;
             }
 
-            var res = this.RoundRobin(this.playersArr.length);
+            var res = this.RoundRobin($scope.playersArr.length);
 
             for (i = 0; i < res.length; i++) {
                 this.matchObj = {};
                 this.matchObj.gameNr = i + 1;
                 this.matchObj.round = res[i].r;
-                this.matchObj.homeTeam = this.playersArr[res[i].a - 1];
-                this.matchObj.awayTeam = this.playersArr[res[i].b - 1];
+                this.matchObj.homeTeam = $scope.playersArr[res[i].a - 1];
+                this.matchObj.awayTeam = $scope.playersArr[res[i].b - 1];
                 this.matchObj.homeGoals = new Number();
                 this.matchObj.awayGoals = new Number();;
-                this.games.push(this.matchObj);
+                $scope.games.push(this.matchObj);
             }
 
-            if (this.doubleMeeting) {
+            if (tournamentSettings.doubleMeeting) {
                 for (x = 0; x < res.length; x++) {
                     this.matchObj = {};
                     this.matchObj.gameNr = x + 1;
                     this.matchObj.round = res.length + res[x].r;
-                    this.matchObj.homeTeam = this.playersArr[res[x].b - 1];
-                    this.matchObj.awayTeam = this.playersArr[res[x].a - 1];
+                    this.matchObj.homeTeam = $scope.playersArr[res[x].b - 1];
+                    this.matchObj.awayTeam = $scope.playersArr[res[x].a - 1];
                     this.matchObj.homeGoals = new Number();
                     this.matchObj.awayGoals = new Number();
-                    this.games.push(this.matchObj);
+                    $scope.games.push(this.matchObj);
                 }
             }
 
-            this.calcScore = function (game) {
+            $scope.calcScore = function (game) {
                 this.homeTeam = game.homeTeam;
                 this.awayTeam = game.awayTeam;
                 this.gameVar = game.round.toString() + ":" + game.gameNr.toString();
 
                 this.homeGameID = {};//game.round.toString() + ":" + game.gameNr.toString();}
                 this.awayGameID = {};
+                this.homeTeam.playedGames = [];
+                this.awayTeam.playedGames = [];
                 this.homeTeam.playedGames[this.gameVar] = {};
                 this.awayTeam.playedGames[this.gameVar] = {};
                 //if (this.homeTeam.playedGames.indexOf(this.gameID) === -1 && this.awayTeam.playedGames.indexOf(this.gameID) === -1) {
@@ -304,10 +306,10 @@ myApp.controller('TableController', ['$scope', '_tournament', function ($scope, 
                     this.homeTeam.playedGames[this.gameVar].wins = 0;
                     this.awayTeam.playedGames[this.gameVar].losses = 0;
                 }
-                this.calcTable(this.homeTeam, this.awayTeam, this.gamesForEachPlayer);
+                $scope.calcTable(this.homeTeam, this.awayTeam, this.gamesForEachPlayer);
             }
 
-            this.calcTable = function (homeTeam, awayTeam, gamesToPlay) {
+            $scope.calcTable = function (homeTeam, awayTeam, gamesToPlay) {
                 this.teams = [];
                 this.teams.push(homeTeam, awayTeam);
 
@@ -349,12 +351,10 @@ myApp.controller('TableController', ['$scope', '_tournament', function ($scope, 
             }
         }
         else {
-            setTimeout(waitForAjax, 1000);
+            setTimeout($scope.Tournament, 1000);
         }
     }
-
-    waitForAjax();
-
+    
 }]);
 
 //myApp.controller('PlayOffController', ['$scope', '_tournament', function ($scope, _tournament) {

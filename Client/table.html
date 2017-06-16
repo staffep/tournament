@@ -1,6 +1,6 @@
 ﻿
-<div ng-controller="TableController as table" >
-    <span>{{table.name}}</span>
+<div ng-controller="TableController" >
+    <span>{{name}}</span>
     <div style="display:table">
         <div style="display:table-row;">
             <div style="display:table-cell;">
@@ -54,9 +54,9 @@
             </div>
         </div>
     
-        <div ng-repeat="player in table.playersArr | orderBy: '-plusminus' | orderBy : '-points'" style="display: table-row" >
+        <div ng-repeat="player in playersArr | orderBy: '-plusminus' | orderBy : '-points'" style="display: table-row" >
             <div style="display:table-cell;"></div>
-            <div style="display:table-cell;">{{player.name}}</div>
+            <div style="display:table-cell;">{{player.playername}}</div>
             <div style="display:table-cell;">{{player.gamesplayed}}</div>
             <div style="display:table-cell;">{{player.wins}}</div>
             <div style="display:table-cell;">{{player.losses}}</div>
@@ -69,15 +69,15 @@
     </div>
     
     <span>Spelschema:</span>
-    <div ng-repeat="game in table.games">
+    <div ng-repeat="game in games">
         <div>
-            {{::game.homeTeam.name}} 
+            {{::game.homeTeam.playername}} 
                 <span>
-                    <input type="number" min="0" ng-model="game.homeGoals" ng-change="table.calcScore(game)">
+                    <input type="number" min="0" ng-model="game.homeGoals" ng-change="calcScore(game)">
                     - 
-                    <input type="number" min="0" ng-model="game.awayGoals" ng-change="table.calcScore(game)"> 
+                    <input type="number" min="0" ng-model="game.awayGoals" ng-change="calcScore(game)"> 
                 </span>
-            {{::game.awayTeam.name}}
+            {{::game.awayTeam.playername}}
         </div>
     </div>
 </div>
