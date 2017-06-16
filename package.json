@@ -1,0 +1,17 @@
+{
+  "name": "tournament-web-app",
+  "version": "0.0.0",
+  "description": "tournament application",
+  "main": "server.js",
+  "author": {
+    "name": "Staffan Persson"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "mongodb": "^2.2.27",
+    "mongoose": "^4.10.2",
+    "node-restful": "^0.2.6",
+    "restify": "^4.3.0"
+  }
+}

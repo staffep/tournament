@@ -1,0 +1,84 @@
+﻿
+<div ng-controller="TableController as table" >
+    <span>{{table.name}}</span>
+    <div style="display:table">
+        <div style="display:table-row;">
+            <div style="display:table-cell;">
+                <a href="#">
+                </a>
+            </div>
+            <div style="display:table-cell;">
+                <a href="#">
+                    Spelare
+                </a>
+            </div>
+            <div style="display:table-cell;">
+                <a href="#">
+                    Spelade matcher
+                </a>
+            </div>
+            <div style="display:table-cell;">
+                <a href="#">
+                    Vinster
+                </a>
+            </div>
+            <div style="display:table-cell;">
+                <a href="#">
+                    Förluster
+                </a>
+            </div>
+            <div style="display:table-cell;">
+                <a href="#">
+                    Oavgjorda
+                </a>
+            </div>
+            <div style="display:table-cell;">
+                <a href="#">
+                    Gjorda mål
+                </a>
+            </div>
+            <div style="display:table-cell;">
+                <a href="#">
+                    Inläppta mål
+                </a>
+            </div>
+            <div style="display:table-cell;">
+                <a href="#">
+                    +/-
+                </a>
+            </div>
+            <div style="display:table-cell;">
+                <a href="#">
+                    Poäng
+                </a>
+            </div>
+        </div>
+    
+        <div ng-repeat="player in table.playersArr | orderBy: '-plusminus' | orderBy : '-points'" style="display: table-row" >
+            <div style="display:table-cell;"></div>
+            <div style="display:table-cell;">{{player.name}}</div>
+            <div style="display:table-cell;">{{player.gamesplayed}}</div>
+            <div style="display:table-cell;">{{player.wins}}</div>
+            <div style="display:table-cell;">{{player.losses}}</div>
+            <div style="display:table-cell;">{{player.draws}}</div>
+            <div style="display:table-cell;">{{player.goalsForward}}</div>
+            <div style="display:table-cell;">{{player.goalsAgainst}}</div>
+            <div style="display:table-cell;">{{player.plusminus}}</div>
+            <div style="display:table-cell;">{{player.points}}</div>
+        </div>
+    </div>
+    
+    <span>Spelschema:</span>
+    <div ng-repeat="game in table.games">
+        <div>
+            {{::game.homeTeam.name}} 
+                <span>
+                    <input type="number" min="0" ng-model="game.homeGoals" ng-change="table.calcScore(game)">
+                    - 
+                    <input type="number" min="0" ng-model="game.awayGoals" ng-change="table.calcScore(game)"> 
+                </span>
+            {{::game.awayTeam.name}}
+        </div>
+    </div>
+</div>
+

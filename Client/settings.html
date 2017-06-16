@@ -1,0 +1,35 @@
+﻿<b>Inställningar:</b>
+<form name="settingsForm">
+  <div>
+    Namn: <input type="text" ng-model="tournament.name" required>
+  </div>
+  <div>
+    Antal spelare: <input type="number" min="2" ng-model="tournament.qty" ng-change="tournament.teamsToPlayoff(tournament.qty)" ng-model-options="{debounce:1000}">
+  </div>
+  <div>
+    Dubbelmöten: <input type="checkbox" ng-model="tournament.doubleMeeting">
+  </div>
+  <div>
+    Slutspel: <input type="checkbox" ng-model="tournament.playoff">
+  </div>
+
+  <div ng-hide="!tournament.playoff">
+    Antal lag till slutspel: 
+    <select ng-model="tournament.finalTeamsToPlayOff">
+      <option ng-repeat="nr in tournament.teamsToPlayOff">{{nr}}</option>
+    </select>
+  </div>
+  <div>
+    <div ng-repeat="player in tournament.getNumber(tournament.qty) track by $index">
+      <input type="text" required placeholder="Spelare {{$index + 1}}" ng-model="tournament.players[$index].playername">
+      <select ng-model="tournament.players[$index].team" required>
+        <option ng-repeat="team in tournament.teams">{{team}}</option>
+      </select>
+    </div>
+  </div>
+    
+  <button ng-click="tournament.save()" ng-disabled="settingsForm.$invalid">Skapa turnering</button>
+  
+</form>
+
+

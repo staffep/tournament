@@ -1,0 +1,12 @@
+﻿<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.js"></script>
+<script src="libs\jquery-1.11.3.js"></script>
+<script src="libs\jquery.bracket.js"></script>
+<script src="tournamentSettings.js"></script>
+<link href="libs/jquery.bracket.min.css" rel="stylesheet">
+
+<div ng-app="tournament" ng-controller="TournamentController as tournament">
+  <tournament-settings ng-if="tournament.currentStatus == 'uncreated'"></tournament-settings>
+  
+    <tournament-table ng-if="tournament.currentStatus == 'created'"></tournament-table>
+    <!--<tournament-playoff ng-if="tournament.currentStatus == 'created'"></tournament-playoff>-->
+</div>
