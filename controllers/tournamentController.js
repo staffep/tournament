@@ -31,11 +31,13 @@ exports.read_a_tournament = function (req, res) {
 };
 
 
-exports.update_a_tournament = function (req, res) {
-    Tournament.findOneAndUpdate(req.params.tournamentId, req.body, { new: true }, function (err, task) {
+exports.update_a_tournament = function(req, res) {
+    Tournament.findOneAndUpdate({"tournamentId": req.body.tournamentId}, req.body, { new: true, upsert: true }, function (err, task) {
         if (err)
             res.send(err);
+        console.log(err);
         res.json(task);
+        console.log(task)
     });
 };
 

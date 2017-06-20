@@ -12,7 +12,39 @@ var PlayerSchema = new Schema({
     goalsForward: { type: Number },
     goalsAgainst: { type: Number },
     plusminus: { type: Number },
-    points: { type: Number },
+    points: { type: Number }
+});
+
+var GameSchema = new Schema({
+    awayGoals: { type: Number },
+    homeGoals: { type: Number },
+    round: { type: Number },
+    gameNr: { type: Number },
+    awayTeam: {
+        playername: { type: String },
+        team: { type: String },
+        gamesplayed: { type: Number },
+        wins: { type: Number },
+        losses: { type: Number },
+        draws: { type: Number },
+        goalsForward: { type: Number },
+        goalsAgainst: { type: Number },
+        plusminus: { type: Number },
+        points: { type: Number }
+    },
+    homeTeam: {
+        playername: { type: String },
+        team: { type: String },
+        gamesplayed: { type: Number },
+        wins: { type: Number },
+        losses: { type: Number },
+        draws: { type: Number },
+        goalsForward: { type: Number },
+        goalsAgainst: { type: Number },
+        plusminus: { type: Number },
+        points: { type: Number }
+    },
+    gamePlayed: {type: Boolean}
 });
 
 var TournamentSchema = new Schema({
@@ -20,12 +52,14 @@ var TournamentSchema = new Schema({
         type: Date,
         default: Date.now
     },
+    tournamentId: {
+        type: Number
+    },
     name: {
         type: String
     },
     players: {
-        type: [PlayerSchema],
-        default: [{ playername: "Staffan", team: "dif" }, { playername: "Hampus", team: "aik" }]
+        type: [PlayerSchema]
     },
     doubleMeeting: {
         type: Boolean
@@ -35,6 +69,9 @@ var TournamentSchema = new Schema({
     },
     teamsToPlayoff: {
         type: Number
+    },
+    games: {
+        type: [GameSchema]
     },
     gamesForEachPlayer: {
         type: Number

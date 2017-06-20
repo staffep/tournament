@@ -13,4 +13,7 @@ module.exports = function (app) {
         .get(tournament.read_a_tournament)
         .put(tournament.update_a_tournament)
         .delete(tournament.delete_a_tournament);
+
+    
+
 };

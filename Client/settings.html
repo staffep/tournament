@@ -1,35 +1,39 @@
 ﻿<b>Inställningar:</b>
 <form name="settingsForm">
   <div>
-    Namn: <input type="text" ng-model="tournament.name" required>
+    Namn: <input type="text" ng-model="name" required>
   </div>
   <div>
-    Antal spelare: <input type="number" min="2" ng-model="tournament.qty" ng-change="tournament.teamsToPlayoff(tournament.qty)" ng-model-options="{debounce:1000}">
+    Antal spelare: <input type="number" min="2" ng-model="qty" ng-blur="teamsToPlayoff(qty)">
   </div>
   <div>
-    Dubbelmöten: <input type="checkbox" ng-model="tournament.doubleMeeting">
+    Dubbelmöten: <input type="checkbox" ng-model="doubleMeeting">
   </div>
   <div>
-    Slutspel: <input type="checkbox" ng-model="tournament.playoff">
+    Slutspel: <input type="checkbox" ng-model="playoff">
   </div>
 
-  <div ng-hide="!tournament.playoff">
+  <div ng-hide="!playoff">
     Antal lag till slutspel: 
-    <select ng-model="tournament.finalTeamsToPlayOff">
-      <option ng-repeat="nr in tournament.teamsToPlayOff">{{nr}}</option>
+    <select ng-model="finalTeamsToPlayOff">
+      <option ng-repeat="nr in teamsToPlayOff">{{nr}}</option>
     </select>
   </div>
   <div>
-    <div ng-repeat="player in tournament.getNumber(tournament.qty) track by $index">
-      <input type="text" required placeholder="Spelare {{$index + 1}}" ng-model="tournament.players[$index].playername">
-      <select ng-model="tournament.players[$index].team" required>
-        <option ng-repeat="team in tournament.teams">{{team}}</option>
+    <div ng-repeat="player in getNumber(qty) track by $index">
+      <input type="text" required placeholder="Spelare {{$index + 1}}" ng-model="players[$index].playername">
+      <select ng-model="players[$index].team" required>
+        <option ng-repeat="team in teams">{{team}}</option>
       </select>
     </div>
   </div>
     
-  <button ng-click="tournament.save()" ng-disabled="settingsForm.$invalid">Skapa turnering</button>
+  <button ng-click="save()" ng-disabled="settingsForm.$invalid">Skapa turnering</button>
   
 </form>
+
+<div ng-repeat="tournament in earliearTournaments">
+  <a href="http://localhost:3000/tournamentmode?ID={{tournament._id}}">{{tournament.name}}</a>
+</div>
 
 

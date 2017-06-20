@@ -4,9 +4,10 @@
 <script src="tournamentSettings.js"></script>
 <link href="libs/jquery.bracket.min.css" rel="stylesheet">
 
-<div ng-app="tournament" ng-controller="TournamentController as tournament">
-  <tournament-settings ng-if="tournament.currentStatus == 'uncreated'"></tournament-settings>
+<div ng-app="tournament" ng-controller="TournamentController">
+  <tournament-settings ng-if="currentStatus == 'settings'"></tournament-settings>
   
-    <tournament-table ng-if="tournament.currentStatus == 'created'"></tournament-table>
+    <tournament-table ng-if="currentStatus == 'table'"></tournament-table>
     <!--<tournament-playoff ng-if="tournament.currentStatus == 'created'"></tournament-playoff>-->
 </div>
+

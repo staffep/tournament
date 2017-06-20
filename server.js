@@ -7,21 +7,23 @@ var express = require('express'),
     path = require('path');
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/Tournamentdb-test');
-
+mongoose.connect('mongodb://localhost/Tournamentdb');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, 'Client')));
 
+var routes = require('./routes/tournamentRoutes');
+
 app.get('/', function (req, res) {
     res.sendfile('', { root: __dirname + "/Client/index.html" });
 });
 
+app.get('/tournamentmode', function (req, res) {
+    res.sendfile('', { root: __dirname + "/Client/index.html" });
+});
 
-
-var routes = require('./routes/tournamentRoutes');
 routes(app);
 
 
