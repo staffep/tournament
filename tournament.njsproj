@@ -33,7 +33,9 @@
     <Compile Include="Client\libs\jquery.bracket.js" />
     <Compile Include="Client\tournamentSettings.js" />
     <Compile Include="controllers\tournamentController.js" />
-    <Compile Include="models\playerModel.js" />
+    <Compile Include="models\playerModel.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="models\tournamentModel.js">
       <SubType>Code</SubType>
     </Compile>

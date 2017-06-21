@@ -3,6 +3,7 @@ var express = require('express'),
     port = process.env.PORT || 3000,
     mongoose = require('mongoose'),
     Tournament = require('./models/tournamentModel'),
+    Bracket = require('./models/bracketModel'),
     bodyParser = require('body-parser'),
     path = require('path');
 

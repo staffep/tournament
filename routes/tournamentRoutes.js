@@ -16,10 +16,10 @@ module.exports = function (app) {
         .delete(tournament.delete_a_tournament);
 
     app.route('/bracket')
-        .get(tournament.list_all_tournament)
-        .post(tournament.create_a_tournament);
+        .get(bracket.list_all_brackets)
+        .post(bracket.bracket);
 
-    app.route('/bracket/:tournamentId')
+    app.route('/bracket/:bracketId')
         .get(bracket.read_a_bracket)
         .put(bracket.update_a_bracket)
         .delete(bracket.delete_a_bracket);
