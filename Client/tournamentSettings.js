@@ -9,7 +9,6 @@ myApp.controller('TournamentController', ['$http', '_tournament', '$scope', func
         } else {
             $scope.currentStatus = "settings";
 
-
             this.name = "";
             this.qty = 2;
             this.doubleMeeting = false;
@@ -27,6 +26,7 @@ myApp.controller('TournamentController', ['$http', '_tournament', '$scope', func
             this.team = '';
             this.players = [];
             this.id = new Date().getUTCMilliseconds();
+            this.bracket = "";
 
             this.teams = [
                 'Carolina Hurricanes',
@@ -76,6 +76,7 @@ myApp.controller('TournamentController', ['$http', '_tournament', '$scope', func
                     "playoff": this.playoff,
                     "teamsToPlayoff": this.finalTeamsToPlayOff,
                     "games": [],
+                    "bracket": this.bracket,
                     "gamesForEachPlayer": this.doubleMeeting === true
                         ? (this.players.length - 1) * 2
                         : (this.players.length - 1) * 1
@@ -147,9 +148,9 @@ myApp.service('_tournament', ['$http', 'globalVars', function ($http, globalVars
 
         let index = 0;
         globalVars.settings.players.forEach(function (player) {
-            if (player._id === homeTeam._id) {
+            if (player.playername === homeTeam.playername) {
                 this.settings.players[index] = homeTeam;
-            } else if (player._id === awayTeam._id) {
+            } else if (player.playername === awayTeam.playername) {
                 this.settings.players[index] = awayTeam;
             }
             index++;
@@ -170,6 +171,24 @@ myApp.service('_tournament', ['$http', 'globalVars', function ($http, globalVars
         {
             console.log(e);
         });
+    }
+
+    this.updateBracket = function (id, settings, callback) {
+       
+        $http({
+                method: 'PUT',
+                url: 'http://localhost:3000/tournament/' + globalVars.settings.tournamentId.toString(),
+                data: settings,
+                async: false,
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .success(function (data) {
+
+                callback(data);
+            })
+            .error(function (e) {
+                console.log(e);
+            });
     }
 
     this.getAll = function (callback) {
@@ -377,24 +396,55 @@ myApp.controller('TableController', ['$scope', '_tournament', 'globalVars', func
     }
 
 }]);
-myApp.controller('PlayOffController', ['$scope', '_tournament', function ($scope, _tournament) {
-    
-    this.renderTree = function() {
-        
-        this.idFromParam = new URL(window.location.href).searchParams.get("ID");
-        _tournament.get(this.idFromParam, (function (response) {
-            console.log(response);
-            
-            $scope.keepRender(response);
-        }));
-        //this.playersArr = angular.copy(_tournamentService.playersArr).sort(function(a, b) {
+myApp.controller('PlayOffController', ['$scope', '_tournament', 'globalVars', function ($scope, _tournament, globalVars) {
+
+    this.initBracket = function() {
+
+        if ($scope.bracketButton !== true) {
+            this.idFromParam = new URL(window.location.href).searchParams.get("ID");
+            _tournament.get(this.idFromParam,
+                (function (response) {
+                    if (response.bracket === "") {
+                        return;
+                    } else {
+                        let saveData = angular.fromJson(response.bracket);
+                        $scope.renderBracket(saveData);
+                    }
+
+                }));
+        }
+        else{
+            this.idFromParam = new URL(window.location.href).searchParams.get("ID");
+            _tournament.get(this.idFromParam,
+                (function(response) {
+                    if (response.bracket === "") {
+                        $scope.createBracket(response);
+                    } else {
+                        let saveData = angular.fromJson(response.bracket);
+                        $scope.renderBracket(saveData);
+                    }
+
+                }));
+        }
+    }
+    this.reloadBracket = function () {
+            this.idFromParam = new URL(window.location.href).searchParams.get("ID");
+            _tournament.get(this.idFromParam,
+                (function (response) {
+                    response.bracket = "";
+                    $('.bracket').children().remove();
+                    $scope.createBracket(response);
+
+                }));
+    }
+    //this.playersArr = angular.copy(_tournamentService.playersArr).sort(function(a, b) {
         //    if (a.points < b.points)
         //        return 1;
         //    if (a.points > b.points)
         //        return -1;
         //    return 0;
         //}).slice(0, parseInt(_tournamentService.settings.TeamToPlayoff));
-        $scope.keepRender = function (response) {
+        $scope.createBracket = function (response) {
 
             this.firstRound = [];
             let playersArr = response.players.sort(function (a, b) {
@@ -409,10 +459,19 @@ myApp.controller('PlayOffController', ['$scope', '_tournament', function ($scope
                 this.firstRound.push(new Array(playersArr.length !== 0 ? playersArr.shift().playername : null, playersArr.length !== 0 ? playersArr.pop().playername : null));
             }
 
-            var saveData = {
+            let saveData = {
                 teams: this.firstRound,
                 results: []
             };
+
+            response.bracket = angular.toJson(saveData);
+            _tournament.updateBracket(new URL(window.location.href).searchParams.get("ID"), response, (function(response) {
+                
+            }));
+
+            $scope.renderBracket(saveData);
+        }
+        $scope.renderBracket = function (saveData){
 
             /* Called whenever bracket is modified
              *
@@ -422,6 +481,11 @@ myApp.controller('PlayOffController', ['$scope', '_tournament', function ($scope
             function saveFn(data, userData) {
                 var json = angular.toJson(data);
                 $('#saveOutput').text('POST ' + json);
+
+                globalVars.settings.bracket = json;
+                _tournament.updateBracket(new URL(window.location.href).searchParams.get("ID"), globalVars.settings, (function (response) {
+
+                }));
                 /* You probably want to do something like this
                 jQuery.ajax("rest/"+userData, {contentType: 'application/json',
                                               dataType: 'json',
@@ -432,7 +496,7 @@ myApp.controller('PlayOffController', ['$scope', '_tournament', function ($scope
 
 
             $(function () {
-                var container = $('.demo');
+                var container = $('.bracket');
                 container.bracket({
                     init: saveData,
                     save: saveFn,
@@ -455,7 +519,7 @@ myApp.controller('PlayOffController', ['$scope', '_tournament', function ($scope
 
 
             });
-        }
+        
     };
 }]);
 

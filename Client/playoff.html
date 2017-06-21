@@ -1,5 +1,6 @@
 
 <div ng-controller="PlayOffController as playoff">
-    <button ng-click="playoff.renderTree(_tournamentService.playersArr);">Generera</button>
-    <div class="demo"></div>
+  <button ng-click="bracketButton = true; playoff.initBracket();" ng-init="playoff.initBracket();">Skapa slutspel</button>
+  <button ng-click="playoff.reloadBracket();">Ladda om slutspel</button>
+    <div class="bracket"></div>
 </div>

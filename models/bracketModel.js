@@ -8,7 +8,7 @@ var BracketSchema = new Schema({
         type: Number
     },
     json: {
-        type: string
+        type: String
     }
 });
 

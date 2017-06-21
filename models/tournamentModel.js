@@ -75,6 +75,9 @@ var TournamentSchema = new Schema({
     },
     gamesForEachPlayer: {
         type: Number
+    },
+    bracket: {
+        type:String
     }
 });
 
