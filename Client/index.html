@@ -8,6 +8,6 @@
   <tournament-settings ng-if="currentStatus == 'settings'"></tournament-settings>
   
     <tournament-table ng-if="currentStatus == 'table'"></tournament-table>
-    <!--<tournament-playoff ng-if="tournament.currentStatus == 'created'"></tournament-playoff>-->
+    <tournament-playoff ng-if="currentStatus == 'table'"></tournament-playoff>
 </div>
 

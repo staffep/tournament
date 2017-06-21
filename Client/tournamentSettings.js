@@ -96,8 +96,6 @@ myApp.controller('TournamentController', ['$http', '_tournament', '$scope', func
 
                 }
 
-                //localStorage.setItem("tournamentSettings", this.settings);
-
                 _tournament.post(this.settings,
                     (function(response) {
 
@@ -263,20 +261,6 @@ myApp.controller('TableController', ['$scope', '_tournament', 'globalVars', func
             $scope.calcScore = function (game, oldGameValue) {
                 this.homeTeam = game.homeTeam;
                 this.awayTeam = game.awayTeam;
-                //this.gameVar = game.round.toString() + ":" + game.gameNr.toString();
-
-                //this.homeGameID = {};//game.round.toString() + ":" + game.gameNr.toString();}
-                //this.awayGameID = {};
-                //this.homeTeam.playedGames[this.gameVar] = {};
-                //this.awayTeam.playedGames[this.gameVar] = {};
-                //if (this.homeTeam.playedGames.indexOf(this.gameID) === -1 && this.awayTeam.playedGames.indexOf(this.gameID) === -1) {
-                //this.homeTeam.playedGames.push(this.gameID);
-                //this.awayTeam.playedGames.push(this.gameID);
-
-                //this.homeTeam.playedGames[this.gameVar].goalsForward = /*this.homeTeam.goalsForward +*/ game.homeGoals;
-                //this.homeTeam.playedGames[this.gameVar].goalsAgainst = /*this.homeTeam.goalsAgainst +*/ game.awayGoals;
-                //this.awayTeam.playedGames[this.gameVar].goalsForward = /*this.awayTeam.goalsForward +*/ game.awayGoals;
-                //this.awayTeam.playedGames[this.gameVar].goalsAgainst = /*this.awayTeam.goalsAgainst +*/ game.homeGoals;
 
                 if (game.gamePlayed === true) {
                     if (game.homeGoals != oldGameValue.homeGoals ||
@@ -340,55 +324,9 @@ myApp.controller('TableController', ['$scope', '_tournament', 'globalVars', func
                     $scope.calcTable(this.homeTeam, this.awayTeam, game);
                 }
                
-                //$scope.calcTable(this.homeTeam, this.awayTeam, this.gamesForEachPlayer);
             }
 
             $scope.calcTable = function (homeTeam, awayTeam, game) {
-                //this.teams = [];
-                //this.teams.push(homeTeam, awayTeam);
-
-                //this.teams.forEach(function (team) {
-                //    this.merge = [];
-                //    let teamStats = {
-                //        gamesplayed: 0,
-                //        wins: 0,
-                //        losses: 0,
-                //        draws: 0,
-                //        goalsForward: 0,
-                //        goalsAgainst: 0,
-                //        points: 0
-                //    };
-
-                //    var played = 1;
-
-                //    Object.keys(team.playedGames).forEach(function (key) {
-                //        teamStats.goalsForward = teamStats.goalsForward + team.playedGames[key].goalsForward;
-                //        teamStats.goalsAgainst = teamStats.goalsAgainst + team.playedGames[key].goalsAgainst;
-                //        teamStats.wins = teamStats.wins + team.playedGames[key].wins;
-                //        teamStats.losses = teamStats.losses + team.playedGames[key].losses;
-                //        teamStats.draws = teamStats.draws + team.playedGames[key].draws;
-                //        teamStats.points = teamStats.points + team.playedGames[key].points;
-                //        teamStats.gamesplayed = played;
-                //        played++;
-                //    });
-                //    team.goalsForward = teamStats.goalsForward;
-                //    team.goalsAgainst = teamStats.goalsAgainst;
-                //    team.plusminus = teamStats.goalsForward - teamStats.goalsAgainst;
-                //    team.wins = teamStats.wins;
-                //    team.losses = teamStats.losses;
-                //    team.draws = teamStats.draws;
-                //    team.points = teamStats.points;
-                //    team.gamesplayed = teamStats.gamesplayed;
-                //    team.finished = team.gamesplayed === gamesToPlay ? true : false;
-
-                   
-                //    _tournament.update(new URL(window.location.href).searchParams.get("ID"), team, (function (response) {
-
-
-                        
-                    //}));
-
-                //});
                 
                 homeTeam.goalsForward = homeTeam.goalsForward + game.homeGoals;
                 homeTeam.goalsAgainst = homeTeam.goalsAgainst + game.awayGoals;
@@ -439,62 +377,87 @@ myApp.controller('TableController', ['$scope', '_tournament', 'globalVars', func
     }
 
 }]);
-//myApp.controller('PlayOffController', ['$scope', '_tournament', function ($scope, _tournament) {
+myApp.controller('PlayOffController', ['$scope', '_tournament', function ($scope, _tournament) {
     
-//    this.renderTree = function() {
-//        this.firstRound = [];
-//        this.playersArr = angular.copy(_tournamentService.playersArr).sort(function(a, b) {
-//            if (a.points < b.points)
-//                return 1;
-//            if (a.points > b.points)
-//                return -1;
-//            return 0;
-//        }).slice(0, parseInt(_tournamentService.settings.TeamToPlayoff));
-//        while (this.playersArr.length) {
-//            this.firstRound.push(new Array(this.playersArr.length !== 0 ? this.playersArr.shift().name : null, this.playersArr.length !== 0 ? this.playersArr.pop().name : null));
-//        }
+    this.renderTree = function() {
+        
+        this.idFromParam = new URL(window.location.href).searchParams.get("ID");
+        _tournament.get(this.idFromParam, (function (response) {
+            console.log(response);
+            
+            $scope.keepRender(response);
+        }));
+        //this.playersArr = angular.copy(_tournamentService.playersArr).sort(function(a, b) {
+        //    if (a.points < b.points)
+        //        return 1;
+        //    if (a.points > b.points)
+        //        return -1;
+        //    return 0;
+        //}).slice(0, parseInt(_tournamentService.settings.TeamToPlayoff));
+        $scope.keepRender = function (response) {
 
-//        var saveData = {
-//            teams: this.firstRound,
-//            results: []
-//        };
+            this.firstRound = [];
+            let playersArr = response.players.sort(function (a, b) {
+                    if (a.points < b.points)
+                        return 1;
+                    if (a.points > b.points)
+                        return -1;
+                    return 0;
+            }).slice(0, parseInt(response.teamsToPlayoff));
+        
+            while (playersArr.length) {
+                this.firstRound.push(new Array(playersArr.length !== 0 ? playersArr.shift().playername : null, playersArr.length !== 0 ? playersArr.pop().playername : null));
+            }
 
-//        /* Called whenever bracket is modified
-//         *
-//         * data:     changed bracket object in format given to init
-//         * userData: optional data given when bracket is created.
-//         */
-//        function saveFn(data, userData) {
-//            var json = angular.toJson(data);
-//            $('#saveOutput').text('POST ' + json);
-//            /* You probably want to do something like this
-//            jQuery.ajax("rest/"+userData, {contentType: 'application/json',
-//                                          dataType: 'json',
-//                                          type: 'post',
-//                                          data: json})
-//            */
-//        };
+            var saveData = {
+                teams: this.firstRound,
+                results: []
+            };
+
+            /* Called whenever bracket is modified
+             *
+             * data:     changed bracket object in format given to init
+             * userData: optional data given when bracket is created.
+             */
+            function saveFn(data, userData) {
+                var json = angular.toJson(data);
+                $('#saveOutput').text('POST ' + json);
+                /* You probably want to do something like this
+                jQuery.ajax("rest/"+userData, {contentType: 'application/json',
+                                              dataType: 'json',
+                                              type: 'post',
+                                              data: json})
+                */
+            };
 
 
-//        $(function () {
-//            var container = $('.demo');
-//            container.bracket({
-//                init: saveData,
-//                save: saveFn,
-//                skipGrandFinalComeback: false,
-//                skipConsolationRound: true,
-//                disableToolbar: true,
-//                disableTeamEdit: true
+            $(function () {
+                var container = $('.demo');
+                container.bracket({
+                    init: saveData,
+                    save: saveFn,
+                    skipGrandFinalComeback: false,
+                    skipConsolationRound: true,
+                    disableToolbar: true,
+                    disableTeamEdit: true
 
 
-//            });
+                });
 
-//            /* You can also inquiry the current data */
-//            var data = container.bracket('data')
-//            $('#dataOutput').text(angular.toJson(data));
-//        });
-//    };
-//}]);
+                /* You can also inquiry the current data */
+                var data = container.bracket('data')
+                $('#dataOutput').text(angular.toJson(data));
+
+                //const bestOfWrapper = $("<div class='bestOfWrapper'></div>");
+                //$('.teamContainer').append(bestOfWrapper);
+                //const bestOf = $("<div class='bestOf'><input type='number'><input type='number'><input type='number'><input type='number'><input type='number'><input type='number'><input type='number'></div><div class='bestOf'><input type='number'><input type='number'><input type='number'><input type='number'><input type='number'><input type='number'><input type='number'></div>");
+                //$('.bestOfWrapper').append(bestOf);
+
+
+            });
+        }
+    };
+}]);
 
 myApp.directive('tournamentSettings', function () {
     return {
@@ -508,10 +471,10 @@ myApp.directive('tournamentTable', function () {
     };
 });
 
-//myApp.directive('tournamentPlayoff', function () {
-//    return {
-//        templateUrl: 'playoff.html'
-//    };
-//});
+myApp.directive('tournamentPlayoff', function () {
+    return {
+        templateUrl: 'playoff.html'
+    };
+});
 
 
