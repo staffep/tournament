@@ -69,16 +69,14 @@
     </div>
     
     <span>Spelschema:</span>
-    <div ng-repeat="game in games">
-        <div>
-            {{::game.homeTeam.playername}} 
-                <span>
-                    <input type="number" min="0" ng-model="game.homeGoals" ng-change="calcScore(game, {{game}})" ng-model-options="{updateOn: 'blur'}">
-                    - 
-                    <input type="number" min="0" ng-model="game.awayGoals" ng-change="calcScore(game, {{game}})" ng-model-options="{updateOn: 'blur'}"> 
-                </span>
-            {{::game.awayTeam.playername}}
-        </div>
-    </div>
+    
+      <div class="input-group" style="max-width: 460px;" ng-repeat="game in games">
+        <span class="input-group-addon">{{::game.homeTeam.playername}}</span>
+        <input type="number" min="0" ng-model="game.homeGoals" ng-change="calcScore(game, {{game}})" ng-model-options="{updateOn: 'blur'}">
+        <span class="input-group-addon">-</span>
+        <input type="number" min="0" ng-model="game.awayGoals" ng-change="calcScore(game, {{game}})" ng-model-options="{updateOn: 'blur'}">
+       <span class="input-group-addon">{{::game.awayTeam.playername}}</span>
+      </div>
+   
 </div>
 

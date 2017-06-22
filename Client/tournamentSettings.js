@@ -175,12 +175,12 @@ myApp.service('_tournament', ['$http', 'globalVars', function ($http, globalVars
         });
     }
 
-    this.updateBracket = function (id, settings, callback) {
-       
+    this.updateBracket = function (id, bracket, callback) {
+        globalVars.settings.bracket = angular.toJson(bracket);
         $http({
                 method: 'PUT',
                 url: 'http://localhost:3000/tournament/' + globalVars.settings.tournamentId.toString(),
-                data: settings,
+                data: globalVars.settings,
                 async: false,
                 headers: { 'Content-Type': 'application/json' }
             })
@@ -421,6 +421,10 @@ myApp.controller('PlayOffController', ['$scope', '_tournament', 'globalVars', '$
                     }
                 }
             }).result.then(function (result) {
+                _tournament.updateBracket(new URL(window.location.href).searchParams.get("ID"), result.bracket, (function (response) {
+
+                }));
+
                 let index = 0;
                 result.matchup.totalresults.forEach(function(gamesWon) {
                     if (gamesWon === Math.round(result.bracket.playoffMeetings / 2)) {
@@ -430,9 +434,16 @@ myApp.controller('PlayOffController', ['$scope', '_tournament', 'globalVars', '$
                                     console.log(result.bracket.results[i][x].id);
                                     for (let z = 0; z < result.bracket.results[i+1].length; z++){
                                         for (let y = 0; y < result.bracket.results[i + 1][z].teams.length; y++) {
-                                            if (result.bracket.results[i + 1][z].teams[y] === "TBD") {
-                                                result.bracket.results[i + 1][z].teams[y] = result.matchup.teams[index];
-                                                return;
+                                            if (result.bracket.results[i + 1][z].fromId1 === result.matchup.id
+                                                || result.bracket.results[i + 1][z].fromId2 === result.matchup.id) {
+                                                if (result.bracket.results[i + 1][z].teams[y] === "TBD") {
+                                                    result.bracket.results[i + 1][z].teams[y] = result.matchup.teams[index];
+
+                                                    _tournament.updateBracket(new URL(window.location.href).searchParams.get("ID"), result.bracket, (function (response) {
+
+                                                    }));
+                                                    return;
+                                                }
                                             }
                                         }
                                     }
@@ -459,8 +470,11 @@ myApp.controller('PlayOffController', ['$scope', '_tournament', 'globalVars', '$
             this.idFromParam = new URL(window.location.href).searchParams.get("ID");
             _tournament.get(this.idFromParam,
                 (function(response) {
-                    $scope.createBracket(response);
-
+                    if (response.bracket === "") {
+                        $scope.createBracket(response);
+                    } else {
+                        $scope.bracket = angular.fromJson(response.bracket);
+                    }
                 }));
         }
 
@@ -481,7 +495,7 @@ myApp.controller('PlayOffController', ['$scope', '_tournament', 'globalVars', '$
                     playersArr.length !== 0 ? playersArr.pop().playername : null));
 
             }
-            
+            var id = 0;
             for (x = this.firstRound.length; x >= 1; x--) {
                 if (x === 64 || x === 32 || x === 16 || x === 8 || x === 4 || x === 2 || x === 1) {
                     var arr = new Array();
@@ -496,7 +510,8 @@ myApp.controller('PlayOffController', ['$scope', '_tournament', 'globalVars', '$
                             var arr2 = { teams: this.firstRound[i],
                                 totalresults: [0, 0],
                                 matches: matches,
-                                id: new String(x) + "." + new String(i) };
+                                id: new String(id + 1) + "." + new String(i + 1)
+                            };
                             arr.push(arr2);
                         };
 
@@ -510,13 +525,16 @@ myApp.controller('PlayOffController', ['$scope', '_tournament', 'globalVars', '$
                             var arr3 = { teams: ["TBD", "TBD"],
                                 totalresults: [0, 0],
                                 matches: matches2,
-                              id: new String(x) + "." + new String(i) };
+                                id: new String(id + 1) + "." + new String(i + 1),
+                                fromId1: new String(id) + "." + new String((i + 1) * 2 - 1),
+                                fromId2: new String(id) + "." + new String((i + 1) * 2)
+                            };
                             arr.push(arr3);
                         };
                     }
 
                     $scope.bracket.results.push(arr);
-
+                    id++;
                 }
             }
             _tournament.updateBracket(new URL(window.location.href).searchParams.get("ID"), $scope.bracket, (function(response) {
