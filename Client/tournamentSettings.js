@@ -399,27 +399,51 @@ myApp.controller('TableController', ['$scope', '_tournament', 'globalVars', func
 
 }]);
 myApp.controller('PlayOffController', ['$scope', '_tournament', 'globalVars', '$uibModal', function ($scope, _tournament, globalVars, $uibModal) {
+    $scope.bracket = { playoffMeetings: new Number(), results:[]};
+
+    $scope.gameChanged = function(player) {
+        console.log(player);
+    }
 
     $scope.open = function (matchup) {
-
-        console.log(matchup);
+        
         $scope.matchup = matchup;
             $scope.showModal = true;
-
-            console.log("hej");
 
             $uibModal.open({
                 component: "myModal",
                 resolve: {
                     matchup: function () {
                         return matchup;
+                    },
+                    bracket: function(){
+                        return $scope.bracket;
                     }
                 }
             }).result.then(function (result) {
-                console.info("I was closed, so do what I need to do myContent's controller now.  Result was->");
-                console.info(result);
+                let index = 0;
+                result.matchup.totalresults.forEach(function(gamesWon) {
+                    if (gamesWon === Math.round(result.bracket.playoffMeetings / 2)) {
+                        for (let i = 0; i < result.bracket.results.length; i++) {
+                            for (let x = 0; x < result.bracket.results[i].length; x++) {
+                                if (result.bracket.results[i][x].id === result.matchup.id) {
+                                    console.log(result.bracket.results[i][x].id);
+                                    for (let z = 0; z < result.bracket.results[i+1].length; z++){
+                                        for (let y = 0; y < result.bracket.results[i + 1][z].teams.length; y++) {
+                                            if (result.bracket.results[i + 1][z].teams[y] === "TBD") {
+                                                result.bracket.results[i + 1][z].teams[y] = result.matchup.teams[index];
+                                                return;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    index++;
+                });
+
             }, function (reason) {
-                console.info("I was dimissed, so do what I need to do myContent's controller now.  Reason was->" + reason);
             });
         };
 
@@ -441,7 +465,7 @@ myApp.controller('PlayOffController', ['$scope', '_tournament', 'globalVars', '$
         }
 
         $scope.createBracket = function(response) {
-
+            $scope.bracket.playoffMeetings = response.playoffMeetings;
             this.firstRound = [];
 
             let playersArr = response.players.sort(function(a, b) {
@@ -457,12 +481,9 @@ myApp.controller('PlayOffController', ['$scope', '_tournament', 'globalVars', '$
                     playersArr.length !== 0 ? playersArr.pop().playername : null));
 
             }
-
-            $scope.results = [];
-
+            
             for (x = this.firstRound.length; x >= 1; x--) {
                 if (x === 64 || x === 32 || x === 16 || x === 8 || x === 4 || x === 2 || x === 1) {
-                    console.log(x);
                     var arr = new Array();
                     if (x === this.firstRound.length) {
 
@@ -494,10 +515,11 @@ myApp.controller('PlayOffController', ['$scope', '_tournament', 'globalVars', '$
                         };
                     }
 
-                    $scope.results.push(arr);
+                    $scope.bracket.results.push(arr);
+
                 }
             }
-            _tournament.updateBracket(new URL(window.location.href).searchParams.get("ID"), response, (function(response) {
+            _tournament.updateBracket(new URL(window.location.href).searchParams.get("ID"), $scope.bracket, (function(response) {
                 
             }));
 
@@ -506,30 +528,39 @@ myApp.controller('PlayOffController', ['$scope', '_tournament', 'globalVars', '$
 }]);
 
 myApp.component('myModal', {
-        template: `<div class="modal-body"><div>{{$ctrl.greeting}}</div> 
-    <label>Name To Edit</label> <input ng-model="$ctrl.modalData.name"><br>
-    <label>Value To Edit</label> <input ng-model="$ctrl.modalData.value"><br>
-    <button class="btn btn-warning" type="button" ng-click="$ctrl.handleClose()">Close Modal</button>
-    <button class="btn btn-warning" type="button" ng-click="$ctrl.handleDismiss()">Dimiss Modal</button>
-    </div>`,
+    templateUrl: 'playoffmodal.html',
         bindings: {
             modalInstance: "<",
             resolve: "<"
         },
         controller: [function () {
             var $scope = this;
-            $scope.$init = function () {
-                $scope.modalData = $scope.resolve.matchup
-            }
+
+            $scope.modalData = $scope.resolve.matchup;
+            $scope.bracket = $scope.resolve.bracket;
 
             $scope.handleClose = function () {
-                $scope.modalInstance.close($scope.modalData);
+                $scope.modalInstance.close({ matchup: $scope.modalData, bracket: $scope.bracket });
             };
 
             $scope.handleDismiss = function () {
                 console.info("in handle dismiss");
                 $scope.modalInstance.dismiss("cancel");
             };
+
+            $scope.calcScore = function (matchup) {
+                matchup.totalresults[0] = 0;
+                matchup.totalresults[1] = 0;
+                matchup.matches.forEach(function (match) {
+                    
+                    if (match[0] > match[1]) {
+                        matchup.totalresults[0]++;
+                    }
+                    else if (match[0] < match[1]) {
+                        matchup.totalresults[1]++;
+                    }
+                })
+            }
         }]
     });
 

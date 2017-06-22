@@ -1,20 +1,17 @@
 
 <div ng-controller="PlayOffController as playoff">
   <button ng-click="bracketButton = true; playoff.initBracket();" ng-init="playoff.initBracket();">Skapa slutspel</button>
-  <!--<button ng-click="playoff.reloadBracket();">Ladda om slutspel</button>-->
-  <div class="bracket"></div>
   
-  <div ng-repeat="round in results">
-    <div ng-repeat="matchup in round" ng-click="open(matchup)">
-      <div >
-        <div style="display:inline-block">{{matchup.teams[0]}}</div><div style="display:inline-block">{{matchup.totalresults[0]}}</div>
-      </div>
-      <div>
-        <div style="display:inline-block">{{matchup.teams[1]}}</div><div style="display:inline-block">{{matchup.totalresults[1]}}</div>
-      </div>
-     
-    </div>
-    
-  </div>
- 
+  <main id="tournament">
+      <ul ng-repeat="round in bracket.results track by $index" class="round round-{{$index+1}}">
+        
+          <li ng-repeat-start="matchup in round" class="spacer">&nbsp;</li>
+          <li class="game game-top" ng-click="open(matchup, round)">{{matchup.teams[0]}} <span>{{matchup.totalresults[0]}}</span></li>
+          <li class="game game-spacer">&nbsp;</li>
+          <li class="game game-bottom " ng-click="open(matchup, round)">{{matchup.teams[1]}} <span>{{matchup.totalresults[1]}}</span></li>
+          <li ng-repeat-end class="spacer">&nbsp;</li>
+        
+      </ul>
+  </main>
 </div>
+
