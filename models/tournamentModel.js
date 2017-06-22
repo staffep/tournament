@@ -70,6 +70,9 @@ var TournamentSchema = new Schema({
     teamsToPlayoff: {
         type: Number
     },
+    playoffMeetings: {
+        type: Number
+    },
     games: {
         type: [GameSchema]
     },

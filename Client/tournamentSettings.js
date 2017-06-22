@@ -1,4 +1,4 @@
-var myApp = angular.module("tournament", []);
+var myApp = angular.module("tournament", ["ui.bootstrap"]);
 
 myApp.value('globalVars', {settings: []});
 
@@ -14,6 +14,7 @@ myApp.controller('TournamentController', ['$http', '_tournament', '$scope', func
             this.doubleMeeting = false;
             this.playoff = false;
             this.teamsToPlayOff = [];
+            this.playoffMeetings = [1,3,5,7];
             this.teamsToPlayoff = function(teamsInGroup) {
                 this.possibleTeamsToPlayOff = [1, 2, 4, 8, 16, 32, 64, 128];
                 this.teamsToPlayOff = [];
@@ -75,6 +76,7 @@ myApp.controller('TournamentController', ['$http', '_tournament', '$scope', func
                     "doubleMeeting": this.doubleMeeting,
                     "playoff": this.playoff,
                     "teamsToPlayoff": this.finalTeamsToPlayOff,
+                    "playoffMeetings": this.playoffMeetings,
                     "games": [],
                     "bracket": this.bracket,
                     "gamesForEachPlayer": this.doubleMeeting === true
@@ -396,132 +398,140 @@ myApp.controller('TableController', ['$scope', '_tournament', 'globalVars', func
     }
 
 }]);
-myApp.controller('PlayOffController', ['$scope', '_tournament', 'globalVars', function ($scope, _tournament, globalVars) {
+myApp.controller('PlayOffController', ['$scope', '_tournament', 'globalVars', '$uibModal', function ($scope, _tournament, globalVars, $uibModal) {
 
-    this.initBracket = function() {
+    $scope.open = function (matchup) {
 
-        if ($scope.bracketButton !== true) {
-            this.idFromParam = new URL(window.location.href).searchParams.get("ID");
-            _tournament.get(this.idFromParam,
-                (function (response) {
-                    if (response.bracket === "") {
-                        return;
-                    } else {
-                        let saveData = angular.fromJson(response.bracket);
-                        $scope.renderBracket(saveData);
+        console.log(matchup);
+        $scope.matchup = matchup;
+            $scope.showModal = true;
+
+            console.log("hej");
+
+            $uibModal.open({
+                component: "myModal",
+                resolve: {
+                    matchup: function () {
+                        return matchup;
                     }
+                }
+            }).result.then(function (result) {
+                console.info("I was closed, so do what I need to do myContent's controller now.  Result was->");
+                console.info(result);
+            }, function (reason) {
+                console.info("I was dimissed, so do what I need to do myContent's controller now.  Reason was->" + reason);
+            });
+        };
 
-                }));
-        }
-        else{
+        $scope.ok = function () {
+            $scope.showModal = false;
+        };
+
+        $scope.cancel = function () {
+            $scope.showModal = false;
+        };
+
+        this.initBracket = function() {
             this.idFromParam = new URL(window.location.href).searchParams.get("ID");
             _tournament.get(this.idFromParam,
                 (function(response) {
-                    if (response.bracket === "") {
-                        $scope.createBracket(response);
-                    } else {
-                        let saveData = angular.fromJson(response.bracket);
-                        $scope.renderBracket(saveData);
-                    }
-
-                }));
-        }
-    }
-    this.reloadBracket = function () {
-            this.idFromParam = new URL(window.location.href).searchParams.get("ID");
-            _tournament.get(this.idFromParam,
-                (function (response) {
-                    response.bracket = "";
-                    $('.bracket').children().remove();
                     $scope.createBracket(response);
 
                 }));
-    }
-    //this.playersArr = angular.copy(_tournamentService.playersArr).sort(function(a, b) {
-        //    if (a.points < b.points)
-        //        return 1;
-        //    if (a.points > b.points)
-        //        return -1;
-        //    return 0;
-        //}).slice(0, parseInt(_tournamentService.settings.TeamToPlayoff));
-        $scope.createBracket = function (response) {
+        }
+
+        $scope.createBracket = function(response) {
 
             this.firstRound = [];
-            let playersArr = response.players.sort(function (a, b) {
-                    if (a.points < b.points)
-                        return 1;
-                    if (a.points > b.points)
-                        return -1;
-                    return 0;
+
+            let playersArr = response.players.sort(function(a, b) {
+                if (a.points < b.points)
+                    return 1;
+                if (a.points > b.points)
+                    return -1;
+                return 0;
             }).slice(0, parseInt(response.teamsToPlayoff));
-        
+
             while (playersArr.length) {
-                this.firstRound.push(new Array(playersArr.length !== 0 ? playersArr.shift().playername : null, playersArr.length !== 0 ? playersArr.pop().playername : null));
+                this.firstRound.push(new Array(playersArr.length !== 0 ? playersArr.shift().playername : null,
+                    playersArr.length !== 0 ? playersArr.pop().playername : null));
+
             }
 
-            let saveData = {
-                teams: this.firstRound,
-                results: []
-            };
+            $scope.results = [];
 
-            response.bracket = angular.toJson(saveData);
+            for (x = this.firstRound.length; x >= 1; x--) {
+                if (x === 64 || x === 32 || x === 16 || x === 8 || x === 4 || x === 2 || x === 1) {
+                    console.log(x);
+                    var arr = new Array();
+                    if (x === this.firstRound.length) {
+
+                        for (var i = 0; i <= x - 1; i++) {
+                            var matches = [];
+                            for (var y = 0; y < response.playoffMeetings; y++) {
+                                var game = new Array(0, 0);
+                                matches.push(game);
+                            }
+                            var arr2 = { teams: this.firstRound[i],
+                                totalresults: [0, 0],
+                                matches: matches,
+                                id: new String(x) + "." + new String(i) };
+                            arr.push(arr2);
+                        };
+
+                    } else {
+                        for (var i = 0; i <= x - 1; i++) {
+                            var matches2 = [];
+                            for (var y = 0; y < response.playoffMeetings; y++) {
+                                var game = new Array(0, 0);
+                                matches2.push(game);
+                            }
+                            var arr3 = { teams: ["TBD", "TBD"],
+                                totalresults: [0, 0],
+                                matches: matches2,
+                              id: new String(x) + "." + new String(i) };
+                            arr.push(arr3);
+                        };
+                    }
+
+                    $scope.results.push(arr);
+                }
+            }
             _tournament.updateBracket(new URL(window.location.href).searchParams.get("ID"), response, (function(response) {
                 
             }));
 
-            $scope.renderBracket(saveData);
+            
         }
-        $scope.renderBracket = function (saveData){
+}]);
 
-            /* Called whenever bracket is modified
-             *
-             * data:     changed bracket object in format given to init
-             * userData: optional data given when bracket is created.
-             */
-            function saveFn(data, userData) {
-                var json = angular.toJson(data);
-                $('#saveOutput').text('POST ' + json);
+myApp.component('myModal', {
+        template: `<div class="modal-body"><div>{{$ctrl.greeting}}</div> 
+    <label>Name To Edit</label> <input ng-model="$ctrl.modalData.name"><br>
+    <label>Value To Edit</label> <input ng-model="$ctrl.modalData.value"><br>
+    <button class="btn btn-warning" type="button" ng-click="$ctrl.handleClose()">Close Modal</button>
+    <button class="btn btn-warning" type="button" ng-click="$ctrl.handleDismiss()">Dimiss Modal</button>
+    </div>`,
+        bindings: {
+            modalInstance: "<",
+            resolve: "<"
+        },
+        controller: [function () {
+            var $scope = this;
+            $scope.$init = function () {
+                $scope.modalData = $scope.resolve.matchup
+            }
 
-                globalVars.settings.bracket = json;
-                _tournament.updateBracket(new URL(window.location.href).searchParams.get("ID"), globalVars.settings, (function (response) {
-
-                }));
-                /* You probably want to do something like this
-                jQuery.ajax("rest/"+userData, {contentType: 'application/json',
-                                              dataType: 'json',
-                                              type: 'post',
-                                              data: json})
-                */
+            $scope.handleClose = function () {
+                $scope.modalInstance.close($scope.modalData);
             };
 
-
-            $(function () {
-                var container = $('.bracket');
-                container.bracket({
-                    init: saveData,
-                    save: saveFn,
-                    skipGrandFinalComeback: false,
-                    skipConsolationRound: true,
-                    disableToolbar: true,
-                    disableTeamEdit: true
-
-
-                });
-
-                /* You can also inquiry the current data */
-                var data = container.bracket('data')
-                $('#dataOutput').text(angular.toJson(data));
-
-                //const bestOfWrapper = $("<div class='bestOfWrapper'></div>");
-                //$('.teamContainer').append(bestOfWrapper);
-                //const bestOf = $("<div class='bestOf'><input type='number'><input type='number'><input type='number'><input type='number'><input type='number'><input type='number'><input type='number'></div><div class='bestOf'><input type='number'><input type='number'><input type='number'><input type='number'><input type='number'><input type='number'><input type='number'></div>");
-                //$('.bestOfWrapper').append(bestOf);
-
-
-            });
-        
-    };
-}]);
+            $scope.handleDismiss = function () {
+                console.info("in handle dismiss");
+                $scope.modalInstance.dismiss("cancel");
+            };
+        }]
+    });
 
 myApp.directive('tournamentSettings', function () {
     return {

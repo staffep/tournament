@@ -14,10 +14,18 @@
   </div>
 
   <div ng-hide="!playoff">
-    Antal lag till slutspel: 
-    <select ng-model="finalTeamsToPlayOff">
-      <option ng-repeat="nr in teamsToPlayOff">{{nr}}</option>
-    </select>
+    <div>
+      Antal lag till slutspel:
+      <select ng-model="finalTeamsToPlayOff">
+        <option ng-repeat="nr in teamsToPlayOff">{{nr}}</option>
+      </select>
+    </div>
+    <div>
+      Antal slutspelsmöten:
+      <select ng-model="playoffMeetings">
+        <option ng-repeat="nr in playoffMeetings">{{nr}}</option>
+      </select>
+    </div>
   </div>
   <div>
     <div ng-repeat="player in getNumber(qty) track by $index">

@@ -29,6 +29,9 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Client\libs\bootstrap\js\bootstrap.js" />
+    <Compile Include="Client\libs\bootstrap\js\bootstrap.min.js" />
+    <Compile Include="Client\libs\bootstrap\js\npm.js" />
     <Compile Include="Client\libs\jquery-1.11.3.js" />
     <Compile Include="Client\libs\jquery.bracket.js" />
     <Compile Include="Client\tournamentSettings.js" />
@@ -45,6 +48,19 @@
     </Compile>
     <Compile Include="server.js" />
     <Content Include="Client\index.html" />
+    <Content Include="Client\libs\bootstrap\css\bootstrap-theme.css" />
+    <Content Include="Client\libs\bootstrap\css\bootstrap-theme.css.map" />
+    <Content Include="Client\libs\bootstrap\css\bootstrap-theme.min.css" />
+    <Content Include="Client\libs\bootstrap\css\bootstrap-theme.min.css.map" />
+    <Content Include="Client\libs\bootstrap\css\bootstrap.css" />
+    <Content Include="Client\libs\bootstrap\css\bootstrap.css.map" />
+    <Content Include="Client\libs\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Client\libs\bootstrap\css\bootstrap.min.css.map" />
+    <Content Include="Client\libs\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Client\libs\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Client\libs\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Client\libs\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Client\libs\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Client\libs\jquery.bracket.min.css" />
     <Content Include="Client\playoff.html" />
     <Content Include="Client\settings.html" />
@@ -55,6 +71,10 @@
   <ItemGroup>
     <Folder Include="Client\" />
     <Folder Include="Client\libs\" />
+    <Folder Include="Client\libs\bootstrap\" />
+    <Folder Include="Client\libs\bootstrap\css\" />
+    <Folder Include="Client\libs\bootstrap\fonts\" />
+    <Folder Include="Client\libs\bootstrap\js\" />
     <Folder Include="models\" />
     <Folder Include="controllers\" />
     <Folder Include="routes\" />
