@@ -1,47 +1,70 @@
-﻿<b>Inställningar:</b>
-<form name="settingsForm">
-  <div>
-    Namn: <input type="text" ng-model="name" required>
-  </div>
-  <div>
-    Antal spelare: <input type="number" min="2" ng-model="qty" ng-blur="teamsToPlayoff(qty)">
-  </div>
-  <div>
-    Dubbelmöten: <input type="checkbox" ng-model="doubleMeeting">
-  </div>
-  <div>
-    Slutspel: <input type="checkbox" ng-model="playoff">
-  </div>
-
-  <div ng-hide="!playoff">
-    <div>
-      Antal lag till slutspel:
-      <select ng-model="finalTeamsToPlayOff">
-        <option ng-repeat="nr in teamsToPlayOff">{{nr}}</option>
-      </select>
-    </div>
-    <div>
-      Antal slutspelsmöten:
-      <select ng-model="playoffMeetings">
-        <option ng-repeat="nr in playoffMeetings">{{nr}}</option>
-      </select>
+﻿  <div class ="leftNavIcon" ng-click="isCollapsed = !isCollapsed" ng-class="isCollapsed ? 'collapsed' : 'uncollapsed'"> 
+    <div class="leftNav" id="sidebar-wrapper" ng-hide="isCollapsed">
+      <ul>
+        <li class="leftNavTitle">
+          <label>Previous tournaments</label>
+        </li>
+        <li ng-repeat="tournament in earliearTournaments | orderBy: '-Created_date' ">
+          <a href="http://localhost:3000/tournamentmode?ID={{tournament._id}}">{{tournament.name}}</a>
+        </li>
+      </ul>
     </div>
   </div>
-  <div>
-    <div ng-repeat="player in getNumber(qty) track by $index">
-      <input type="text" required placeholder="Spelare {{$index + 1}}" ng-model="players[$index].playername">
-      <select ng-model="players[$index].team" required>
-        <option ng-repeat="team in teams">{{team}}</option>
-      </select>
-    </div>
+  <div class="form-wrapper">
+    <form name="settingsForm" class="form-horizontal">
+      <div class="form-group">
+        <label for="tournament-name" class="col-sm-3">Tournament name</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" ng-model="name" required id="tournament-name" placeholder="Name">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="tournament-nr-of-players" class="col-sm-3">Nr of players</label>
+        <div class="col-sm-2">
+          <input id="tournament-nr-of-players" class="form-control" type="number" min="2" ng-model="qty" ng-blur="teamsToPlayoff(qty)">
+        </div>
+        <label for="tournament-double-meetings" class="col-sm-3">Double meetings</label>
+        <div class="col-sm-1">
+          <input type="checkbox" ng-model="doubleMeeting" id="tournament-double-meetings">
+        </div>
+        <label for="tournament-playoff" class="col-sm-2">Playoff</label>
+        <div class="col-sm-1">
+          <input type="checkbox" ng-model="playoff" ng-change="initMeetings();" id="tournament-playoff">
+        </div>
+      </div>
+      <div ng-hide="!playoff">
+        <div class="form-group">
+          <label for="tournament-nr-of-players-to-playoff" class="col-sm-3">Teams to playoff</label>
+          <div class="col-sm-3">
+            <select class="form-control" ng-model="finalTeamsToPlayOff" id="tournament-nr-of-players-to-playoff">
+              <option ng-repeat="nr in teamsToPlayOff">{{nr}}</option>
+            </select>
+          </div>
+          <label for="tournament-nr-of-playoff-meetings" class="col-sm-3">Playoff series</label>
+          <div class="col-sm-3">
+            <select class="form-control" ng-model="playoffMeetings" id="tournament-nr-of-playoff-meetings">
+              <option ng-repeat="nr in playoffMeetings">{{nr}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div ng-repeat="player in getNumber(qty) track by $index">
+          <div class="form-group">
+            <div class="col-sm-6">
+              <input type="text" class="form-control" id="tournament-name{{$index + 1}}" required placeholder="Player {{$index + 1}}" ng-model="players[$index].playername">
+            </div>
+            <div class="col-sm-6">
+              <select class="form-control" ng-model="players[$index].team" required>
+                <option ng-repeat="team in teams">{{team.fullName}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-default" ng-click="save()" ng-disabled="settingsForm.$invalid">Create tournament</button>
+      </div>
+    </form>
   </div>
-    
-  <button ng-click="save()" ng-disabled="settingsForm.$invalid">Skapa turnering</button>
-  
-</form>
-
-<div ng-repeat="tournament in earliearTournaments">
-  <a href="http://localhost:3000/tournamentmode?ID={{tournament._id}}">{{tournament.name}}</a>
-</div>
-
 

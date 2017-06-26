@@ -1,16 +1,33 @@
-﻿<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.js"></script>
-<script src="libs\jquery-1.11.3.js"></script>
-<script src="libs\bootstrap\js\bootstrap.js"></script>
-<script src="libs\bootstrap\js\ui-bootstrap-tpls-2.5.0.js"></script>
-<script src="libs\jquery.bracket.js"></script>
-<script src="tournamentSettings.js"></script>
-<link href="bracket.css" rel="stylesheet">
-<link href="libs\bootstrap\css\bootstrap.css" rel="stylesheet">
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<div ng-app="tournament" ng-controller="TournamentController">
-  <tournament-settings ng-if="currentStatus == 'settings'"></tournament-settings>
-  
-    <tournament-table ng-if="currentStatus == 'table'"></tournament-table>
-    <tournament-playoff ng-if="currentStatus == 'table'"></tournament-playoff>
-</div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.js"></script>
+  <script src="libs\jquery-1.11.3.js"></script>
+  <script src="libs\bootstrap\js\bootstrap.js"></script>
+  <script src="libs\bootstrap\js\ui-bootstrap-tpls-2.5.0.js"></script>
+  <script src="libs\jquery.bracket.js"></script>
+  <script src="tournamentSettings.js"></script>
+  <link href="bracket.css" rel="stylesheet">
+  <link href="settings.css" rel="stylesheet">
+  <link href="table.css" rel="stylesheet">
+  <link href="libs\bootstrap\css\bootstrap.css" rel="stylesheet">
+  <title>
+    NHL-turnering
+  </title>
+</head>
+  <body>
+    <div ng-app="tournament" ng-controller="TournamentController">
+      <tournament-settings ng-if="currentStatus == 'settings'"></tournament-settings>
+
+      <tournament-table ng-if="currentStatus == 'table'"></tournament-table>
+      <tournament-playoff ng-if="currentStatus == 'table'"></tournament-playoff>
+    </div>
+  </body>
+</html>
+
+
+
+
 

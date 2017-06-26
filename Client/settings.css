@@ -1,0 +1,63 @@
+﻿.form-wrapper {
+    width: 70%;
+    float: left;
+}
+    .form-wrapper label {
+        margin-top: 7px;
+    }
+    .form-wrapper input[type="checkbox"] { 
+        margin: 10px 0 0; 
+    }
+.earlierTournaments {
+    display: inline-block;
+}
+
+.leftNavIcon {
+    height: 30px;
+    width: 30px;
+    background-color: #2980b9;
+    background-image: url(img/stanleycup2.png);
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-position: 58% 30%;
+    position: absolute;
+    top: 0px;
+    cursor: pointer;
+    z-index: 2;
+}
+
+    .leftNavIcon.collapsed {
+        right: 0px;
+    }
+    .leftNavIcon.uncollapsed {
+        right: 170px;
+    }
+    .leftNavIcon.uncollapsed .leftNav {
+        width: 180px;
+    }
+
+    .leftNavIcon .leftNav li {
+        list-style-type: none;
+        margin-left: 5px;
+        cursor: default;
+    }
+    .leftNavIcon .leftNav ul {
+        margin-left: 30px !important;
+        width: 100%;
+        /*border-left: 1px solid black;*/
+        background-color: #ecf0f1;
+        padding: 0;
+    }
+    .leftNavIcon .leftNavTitle {
+        height: 30px;
+    }
+.leftNav ul:after {
+    border-left: 1px solid black;
+}
+.leftNavTitle label {
+    margin-top: 4px;
+}
+
+
+
+

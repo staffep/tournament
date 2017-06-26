@@ -4,11 +4,15 @@ var Schema = mongoose.Schema;
 
 var PlayerSchema = new Schema({
     playername: { type: String},
-    team: { type: String },
+    team: {
+        fullName: { type: String },
+        abbrevation: {type: String}
+    },
     gamesplayed: { type: Number },
     wins: { type: Number },
     losses: { type: Number },
     draws: { type: Number },
+    otLoss: { type: Number },
     goalsForward: { type: Number },
     goalsAgainst: { type: Number },
     plusminus: { type: Number },
@@ -22,11 +26,15 @@ var GameSchema = new Schema({
     gameNr: { type: Number },
     awayTeam: {
         playername: { type: String },
-        team: { type: String },
+        team: {
+            fullName: { type: String },
+            abbrevation: { type: String }
+        },
         gamesplayed: { type: Number },
         wins: { type: Number },
         losses: { type: Number },
         draws: { type: Number },
+        otLoss: { type: Number },
         goalsForward: { type: Number },
         goalsAgainst: { type: Number },
         plusminus: { type: Number },
@@ -34,11 +42,15 @@ var GameSchema = new Schema({
     },
     homeTeam: {
         playername: { type: String },
-        team: { type: String },
+        team: {
+            fullName: { type: String },
+            abbrevation: { type: String }
+        },
         gamesplayed: { type: Number },
         wins: { type: Number },
         losses: { type: Number },
         draws: { type: Number },
+        otLoss: { type: Number },
         goalsForward: { type: Number },
         goalsAgainst: { type: Number },
         plusminus: { type: Number },

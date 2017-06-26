@@ -8,13 +8,16 @@ myApp.controller('TournamentController', ['$http', '_tournament', '$scope', func
             $scope.currentStatus = "table";
         } else {
             $scope.currentStatus = "settings";
-
+            $scope.isCollapsed = true;
             this.name = "";
             this.qty = 2;
             this.doubleMeeting = false;
             this.playoff = false;
             this.teamsToPlayOff = [];
-            this.playoffMeetings = [1,3,5,7];
+            $scope.initMeetings = function() {
+                this.playoffMeetings = this.playoff === false ? 0 : [1, 3, 5, 7];
+            }
+            this.playoffMeetings = 0;
             this.teamsToPlayoff = function(teamsInGroup) {
                 this.possibleTeamsToPlayOff = [1, 2, 4, 8, 16, 32, 64, 128];
                 this.teamsToPlayOff = [];
@@ -29,38 +32,131 @@ myApp.controller('TournamentController', ['$http', '_tournament', '$scope', func
             this.id = new Date().getUTCMilliseconds();
             this.bracket = "";
 
-            this.teams = [
-                'Carolina Hurricanes',
-                'Columbus Blue Jackets',
-                'New Jersey Devils',
-                'New York Islanders',
-                'New York Rangers',
-                'Philadelphia Flyers',
-                'Pittsburgh Penguins',
-                'Washington Capitals',
-                'Boston Bruins',
-                'Buffalo Sabres',
-                'Detroit Red Wings',
-                'Florida Panthers',
-                'Montréal Canadiens',
-                'Ottawa Senators',
-                'Tampa Bay Lightning',
-                'Toronto Maple Leafs',
-                'Chicago Blackhawks',
-                'Colorado Avalanche',
-                'Dallas Stars',
-                'Minnesota Wild',
-                'Nashville Predators',
-                'St.Louis Blues',
-                'Winnipeg Jets',
-                'Anaheim Ducks',
-                'Arizona Coyotes',
-                'Calgary Flames',
-                'Edmonton Oilers',
-                'Los Angeles Kings',
-                'San Jose Sharks',
-                'Vancouver Canucks',
-                'Vegas Golden Knights'
+            $scope.teams = [
+                {
+                    fullName: 'Carolina Hurricanes',
+                    abbrevation: 'car'
+                },
+                {
+                    fullName: 'Columbus Blue Jackets',
+                    abbrevation: 'cbj'
+                },
+                {
+                    fullName: 'New Jersey Devils',
+                    abbrevation: 'njd'
+                },
+                {
+                    fullName: 'New York Islanders',
+                    abbrevation: 'nyi'
+                },
+                {
+                    fullName: 'New York Rangers',
+                    abbrevation: 'nyr'
+                },
+                {
+                    fullName: 'Philadelphia Flyers',
+                    abbrevation: 'phi'
+                },
+                {
+                    fullName: 'Pittsburgh Penguins',
+                    abbrevation: 'pit'
+                },
+                {
+                    fullName: 'Washington Capitals',
+                    abbrevation: 'was'
+                },
+                {
+                    fullName: 'Boston Bruins',
+                    abbrevation: 'bos'
+                },
+                {
+                    fullName: 'Buffalo Sabres',
+                    abbrevation: 'buf'
+                },
+                {
+                    fullName: 'Detroit Red Wings',
+                    abbrevation: 'det'
+                },
+                {
+                    fullName: 'Florida Panthers',
+                    abbrevation: 'flo'
+                },
+                {
+                    fullName: 'Montreal Canadiens',
+                    abbrevation: 'cbj'
+                },
+                {
+                    fullName: 'Ottawa Senators',
+                    abbrevation: 'ott'
+                },
+                {
+                    fullName: 'Tampa Bay Lightning',
+                    abbrevation: 'tbl'
+                },
+                {
+                    fullName: 'Toronto Maple Leafs',
+                    abbrevation: 'tor'
+                },
+                {
+                    fullName: 'Chicago Blackhawks',
+                    abbrevation: 'chi'
+                },
+                {
+                    fullName: 'Colorado Avalanche',
+                    abbrevation: 'col'
+                },
+                {
+                    fullName: 'Dallas Stars',
+                    abbrevation: 'dal'
+                },
+                {
+                    fullName: 'Minnesota Wild',
+                    abbrevation: 'min'
+                },
+                {
+                    fullName: 'Nashville Predators',
+                    abbrevation: 'nas'
+                },
+                {
+                    fullName: 'St.Louis Blues',
+                    abbrevation: 'stl'
+                },
+                {
+                    fullName: 'Winnipeg Jets',
+                    abbrevation: 'win'
+                },
+                {
+                    fullName: 'Anaheim Ducks',
+                    abbrevation: 'ana'
+                },
+                {
+                    fullName: 'Arizona Coyotes',
+                    abbrevation: 'ari'
+                },
+                {
+                    fullName: 'Calgary Flames',
+                    abbrevation: 'cal'
+                },
+                {
+                    fullName: 'Edmonton Oilers',
+                    abbrevation: 'edm'
+                },
+                {
+                    fullName: 'Los Angeles Kings',
+                    abbrevation: 'lak'
+                },
+                {
+                    fullName: 'San Jose Sharks',
+                    abbrevation: 'san'
+                },
+                {
+                    fullName: 'Vancouver Canucks',
+                    abbrevation: 'van'
+                },
+                {
+                    fullName: 'Vegas Golden Knights',
+                    abbrevation: 'vgk'
+                }
             ];
 
             this.getNumber = function(num) {
@@ -68,7 +164,18 @@ myApp.controller('TournamentController', ['$http', '_tournament', '$scope', func
                 return playersIds;
             }
 
-            this.save = function() {
+            this.save = function () {
+                this.players.forEach(function(player) {
+                    $scope.teams.forEach(function(team) {
+                        if (player.team === team.fullName) {
+                            player.team = {
+                                'fullName': team.fullName,
+                                'abbrevation': team.abbrevation
+                            };
+                        }
+                    });
+                });
+
                 this.settings = {
                     "tournamentId": this.id,
                     "name": this.name,
@@ -90,6 +197,7 @@ myApp.controller('TournamentController', ['$http', '_tournament', '$scope', func
                     this.settings.players[i].wins = 0;
                     this.settings.players[i].losses = 0;
                     this.settings.players[i].draws = 0;
+                    this.settings.players[i].otLoss = 0;
                     this.settings.players[i].goalsForward = 0;
                     this.settings.players[i].goalsAgainst = 0;
                     this.settings.players[i].plusminus = 0;
@@ -222,6 +330,7 @@ myApp.controller('TableController', ['$scope', '_tournament', 'globalVars', func
             $scope.playersArr = globalVars.settings.players;
             this.fixures = [];
             $scope.games = globalVars.settings.games;
+            $scope.teamsToPlayOff = globalVars.settings.teamsToPlayoff;
             this.groupFinished = false;
 
             if ($scope.games.length === 0) {
@@ -260,6 +369,7 @@ myApp.controller('TableController', ['$scope', '_tournament', 'globalVars', func
                     this.matchObj.awayTeam = $scope.playersArr[res[i].b - 1];
                     this.matchObj.homeGoals = new Number();
                     this.matchObj.awayGoals = new Number();
+                    this.matchObj.ot = false;
                     this.matchObj.gamePlayed = false;
                     $scope.games.push(this.matchObj);
                 }
@@ -273,6 +383,7 @@ myApp.controller('TableController', ['$scope', '_tournament', 'globalVars', func
                         this.matchObj.awayTeam = $scope.playersArr[res[x].a - 1];
                         this.matchObj.homeGoals = new Number();
                         this.matchObj.awayGoals = new Number();
+                        this.matchObj.ot = false;
                         this.matchObj.isPlayed = false;
                         $scope.games.push(this.matchObj);
                     }
@@ -282,10 +393,11 @@ myApp.controller('TableController', ['$scope', '_tournament', 'globalVars', func
             $scope.calcScore = function (game, oldGameValue) {
                 this.homeTeam = game.homeTeam;
                 this.awayTeam = game.awayTeam;
-
+                /*If game is played, reset score for game*/
                 if (game.gamePlayed === true) {
                     if (game.homeGoals != oldGameValue.homeGoals ||
-                        game.awayGoals != oldGameValue.awayGoals) {
+                        game.awayGoals != oldGameValue.awayGoals ||
+                        game.ot != oldGameValue.ot ) {
                         oldGameValue.homeGoals === null ? 0 : oldGameValue.homeGoals;
                         oldGameValue.awayGoals === null ? 0 : oldGameValue.awayGoals;
                         if (typeof this.homeTeam.goalsForward === "undefined") {
@@ -304,7 +416,7 @@ myApp.controller('TableController', ['$scope', '_tournament', 'globalVars', func
                         this.awayTeam.plusminus = this.awayTeam.plusminus - (oldGameValue.awayGoals - oldGameValue.homeGoals);
                         
 
-                        if (oldGameValue.homeGoals > oldGameValue.awayGoals) {
+                        if (oldGameValue.homeGoals > oldGameValue.awayGoals && oldGameValue.ot === false) {
                             this.homeTeam.wins = this.homeTeam.wins === 0 ? 0 : this.homeTeam.wins - 1;
                             this.awayTeam.losses = this.awayTeam.losses === 0 ? 0 : this.awayTeam.losses - 1;
                             this.homeTeam.points = this.homeTeam.points === 0 ? 0 : this.homeTeam.points - 2;
@@ -315,7 +427,7 @@ myApp.controller('TableController', ['$scope', '_tournament', 'globalVars', func
                             this.awayTeam.points = this.awayTeam.points === 0 ? 0 : this.awayTeam.points + 0;
                         }
 
-                        else if (oldGameValue.homeGoals < oldGameValue.awayGoals) {
+                        else if (oldGameValue.homeGoals < oldGameValue.awayGoals && oldGameValue.ot === false) {
                             this.homeTeam.wins = this.homeTeam.wins === 0 ? 0 : this.homeTeam.wins + 0;
                             this.awayTeam.losses = this.awayTeam.losses === 0 ? 0 : this.awayTeam.losses + 0;
                             this.homeTeam.points = this.homeTeam.points === 0 ? 0 : this.homeTeam.points + 0;
@@ -334,6 +446,31 @@ myApp.controller('TableController', ['$scope', '_tournament', 'globalVars', func
                             this.awayTeam.wins = this.awayTeam.wins === 0 ? 0 : this.awayTeam.wins + 0;
                             this.homeTeam.losses = this.homeTeam.losses === 0 ? 0 : this.homeTeam.losses + 0;
                             this.awayTeam.points = this.awayTeam.points === 0 ? 0 : this.awayTeam.points - 1;
+                        }
+                        if (oldGameValue.homeGoals > oldGameValue.awayGoals && oldGameValue.ot === true) {
+                            this.homeTeam.wins = this.homeTeam.wins === 0 ? 0 : this.homeTeam.wins - 1;
+                            this.awayTeam.losses = this.awayTeam.losses === 0 ? 0 : this.awayTeam.losses - 0;
+                            this.homeTeam.points = this.homeTeam.points === 0 ? 0 : this.homeTeam.points - 2;
+                            this.homeTeam.draws = this.homeTeam.draws === 0 ? 0 : this.homeTeam.draws + 0;
+                            this.awayTeam.draws = this.awayTeam.draws === 0 ? 0 : this.awayTeam.draws + 0;
+                            this.awayTeam.wins = this.awayTeam.wins === 0 ? 0 : this.awayTeam.wins + 0;
+                            this.homeTeam.losses = this.homeTeam.losses === 0 ? 0 : this.homeTeam.losses + 0;
+                            this.awayTeam.points = this.awayTeam.points === 0 ? 0 : this.awayTeam.points - 1;
+                            this.homeTeam.otLoss = this.homeTeam.otLoss === 0 ? 0 : this.homeTeam.otLoss + 0;
+                            this.awayTeam.otLoss = this.awayTeam.otLoss === 0 ? 0 : this.awayTeam.otLoss - 1;
+                        }
+
+                        else if (oldGameValue.homeGoals < oldGameValue.awayGoals && oldGameValue.ot === true) {
+                            this.homeTeam.wins = this.homeTeam.wins === 0 ? 0 : this.homeTeam.wins + 0;
+                            this.awayTeam.losses = this.awayTeam.losses === 0 ? 0 : this.awayTeam.losses + 0;
+                            this.homeTeam.points = this.homeTeam.points === 0 ? 0 : this.homeTeam.points - 1;
+                            this.homeTeam.draws = this.homeTeam.draws === 0 ? 0 : this.homeTeam.draws + 0;
+                            this.awayTeam.draws = this.awayTeam.draws === 0 ? 0 : this.awayTeam.draws + 0;
+                            this.awayTeam.wins = this.awayTeam.wins === 0 ? 0 : this.awayTeam.wins - 1;
+                            this.homeTeam.losses = this.homeTeam.losses === 0 ? 0 : this.homeTeam.losses + 0;
+                            this.awayTeam.points = this.awayTeam.points === 0 ? 0 : this.awayTeam.points - 2;
+                            this.homeTeam.otLoss = this.homeTeam.otLoss === 0 ? 0 : this.homeTeam.otLoss - 1;
+                            this.awayTeam.otLoss = this.awayTeam.otLoss === 0 ? 0 : this.awayTeam.otLoss + 0;
                         }
 
                         $scope.calcTable(this.homeTeam, this.awayTeam, game);
@@ -357,7 +494,7 @@ myApp.controller('TableController', ['$scope', '_tournament', 'globalVars', func
                 awayTeam.goalsAgainst = awayTeam.goalsAgainst + game.homeGoals;
                 awayTeam.plusminus = awayTeam.plusminus + (game.awayGoals - game.homeGoals);
 
-                if (game.homeGoals > game.awayGoals) {
+                if (game.homeGoals > game.awayGoals && game.ot === false) {
                     homeTeam.wins = homeTeam.wins + 1;
                     awayTeam.losses = awayTeam.losses + 1;
                     homeTeam.points = homeTeam.points + 2;
@@ -368,7 +505,7 @@ myApp.controller('TableController', ['$scope', '_tournament', 'globalVars', func
                     awayTeam.points = awayTeam.points + 0;
                 }
 
-                else if (game.homeGoals < game.awayGoals) {
+                else if (game.homeGoals < game.awayGoals && game.ot === false) {
                     homeTeam.wins = homeTeam.wins + 0;
                     awayTeam.losses = awayTeam.losses + 0;
                     homeTeam.points = homeTeam.points + 0;
@@ -388,6 +525,31 @@ myApp.controller('TableController', ['$scope', '_tournament', 'globalVars', func
                     homeTeam.losses = homeTeam.losses + 0;
                     awayTeam.points = awayTeam.points + 1;
                 }
+                else if (game.homeGoals > game.awayGoals && game.ot === true) {
+                    homeTeam.wins = homeTeam.wins + 1;
+                    awayTeam.losses = awayTeam.losses + 0;
+                    homeTeam.points = homeTeam.points + 2;
+                    homeTeam.draws = homeTeam.draws + 0;
+                    awayTeam.draws = awayTeam.draws + 0;
+                    awayTeam.wins = awayTeam.wins + 0;
+                    homeTeam.losses = homeTeam.losses + 0;
+                    awayTeam.points = awayTeam.points + 1;
+                    awayTeam.otLoss = awayTeam.otLoss + 1;
+                    homeTeam.otLoss = homeTeam.otLoss + 0;
+                }
+
+                else if (game.homeGoals < game.awayGoals && game.ot === true) {
+                    homeTeam.wins = homeTeam.wins + 0;
+                    awayTeam.losses = awayTeam.losses + 0;
+                    homeTeam.points = homeTeam.points + 1;
+                    homeTeam.draws = homeTeam.draws + 0;
+                    awayTeam.draws = awayTeam.draws + 0;
+                    awayTeam.wins = awayTeam.wins + 1;
+                    homeTeam.losses = homeTeam.losses + 0;
+                    awayTeam.points = awayTeam.points + 2;
+                    awayTeam.otLoss = awayTeam.otLoss + 0;
+                    homeTeam.otLoss = homeTeam.otLoss + 1;
+                }
                 
                 _tournament.update(new URL(window.location.href).searchParams.get("ID"), homeTeam, awayTeam, (function (response) {}));
             }
@@ -399,8 +561,9 @@ myApp.controller('TableController', ['$scope', '_tournament', 'globalVars', func
 
 }]);
 myApp.controller('PlayOffController', ['$scope', '_tournament', 'globalVars', '$uibModal', function ($scope, _tournament, globalVars, $uibModal) {
-    $scope.bracket = { playoffMeetings: new Number(), results:[]};
 
+    $scope.bracket = { playoffMeetings: new Number(), results: [] };
+    $scope.bracketButtonIsClicked = false;
     $scope.gameChanged = function(player) {
         console.log(player);
     }
@@ -469,7 +632,8 @@ myApp.controller('PlayOffController', ['$scope', '_tournament', 'globalVars', '$
         this.initBracket = function() {
             this.idFromParam = new URL(window.location.href).searchParams.get("ID");
             _tournament.get(this.idFromParam,
-                (function(response) {
+                (function (response) {
+                    $scope.playoff = response.playoff;
                     if (response.bracket === "") {
                         $scope.createBracket(response);
                     } else {
