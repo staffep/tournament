@@ -2,8 +2,8 @@
     name: 'rest-api',
     version: '0.0.1',
     env: process.env.NODE_ENV || 'development',
-    port: process.env.PORT || 3000,
+    port: 10255,
     db: {
-        uri: 'mongo "mongodb://dev-shard-00-00-cigix.mongodb.net:27017,dev-shard-00-01-cigix.mongodb.net:27017,dev-shard-00-02-cigix.mongodb.net:27017/test?replicaSet=Dev-shard-0" --authenticationDatabase admin --ssl --username adm --password 123'
+        uri: 'mongo "mongodb://tournament-test:oDciE7a3W0kpsqRRnLMc6sJINSC4w6QmP0SiXAfO20hFCWtFxrFpZywL6U9jFrOGDKIkTAiLq6aOYOWm80Yy9Q==@tournament-test.documents.azure.com:10255" --authenticationDatabase admin --ssl --username tournament-test --password oDciE7a3W0kpsqRRnLMc6sJINSC4w6QmP0SiXAfO20hFCWtFxrFpZywL6U9jFrOGDKIkTAiLq6aOYOWm80Yy9Q'
     }
 }

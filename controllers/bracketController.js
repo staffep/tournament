@@ -45,7 +45,7 @@ exports.update_a_bracket = function (req, res) {
 exports.delete_a_bracket = function (req, res) {
 
 
-    Tournament.remove({
+    Bracket.remove({
         _id: req.params.tournamentId
     }, function (err, task) {
         if (err)

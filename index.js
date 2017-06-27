@@ -5,7 +5,7 @@
  */
 const config = require('./config'),
     restify = require('restify'),
-    mongodb = require('mongodb').MongoClient
+    mongodb = require('mongodb').MongoClient;
 
 /**
  * Initialize Server

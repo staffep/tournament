@@ -47,6 +47,40 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="server.js" />
+    <Content Include="Client\bracket.css" />
+    <Content Include="Client\img\ana.gif" />
+    <Content Include="Client\img\ari.gif" />
+    <Content Include="Client\img\bos.gif" />
+    <Content Include="Client\img\buf.gif" />
+    <Content Include="Client\img\cal.gif" />
+    <Content Include="Client\img\car.gif" />
+    <Content Include="Client\img\cbj.gif" />
+    <Content Include="Client\img\chi.gif" />
+    <Content Include="Client\img\col.gif" />
+    <Content Include="Client\img\dal.gif" />
+    <Content Include="Client\img\det.gif" />
+    <Content Include="Client\img\edm.gif" />
+    <Content Include="Client\img\flo.gif" />
+    <Content Include="Client\img\lak.gif" />
+    <Content Include="Client\img\min.gif" />
+    <Content Include="Client\img\mon.gif" />
+    <Content Include="Client\img\nas.gif" />
+    <Content Include="Client\img\njd.gif" />
+    <Content Include="Client\img\nyi.gif" />
+    <Content Include="Client\img\nyr.gif" />
+    <Content Include="Client\img\ott.gif" />
+    <Content Include="Client\img\phi.gif" />
+    <Content Include="Client\img\pit.gif" />
+    <Content Include="Client\img\san.gif" />
+    <Content Include="Client\img\stanleycup.png" />
+    <Content Include="Client\img\stanleycup2.png" />
+    <Content Include="Client\img\stl.gif" />
+    <Content Include="Client\img\tbl.gif" />
+    <Content Include="Client\img\tor.gif" />
+    <Content Include="Client\img\van.gif" />
+    <Content Include="Client\img\vgk.gif" />
+    <Content Include="Client\img\was.gif" />
+    <Content Include="Client\img\win.gif" />
     <Content Include="Client\index.html" />
     <Content Include="Client\libs\bootstrap\css\bootstrap-theme.css" />
     <Content Include="Client\libs\bootstrap\css\bootstrap-theme.css.map" />
@@ -63,13 +97,17 @@
     <Content Include="Client\libs\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Client\libs\jquery.bracket.min.css" />
     <Content Include="Client\playoff.html" />
+    <Content Include="Client\playoffmodal.html" />
+    <Content Include="Client\settings.css" />
     <Content Include="Client\settings.html" />
+    <Content Include="Client\table.css" />
     <Content Include="Client\table.html" />
     <Content Include="package.json" />
     <Content Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Client\" />
+    <Folder Include="Client\img\" />
     <Folder Include="Client\libs\" />
     <Folder Include="Client\libs\bootstrap\" />
     <Folder Include="Client\libs\bootstrap\css\" />
@@ -77,6 +115,8 @@
     <Folder Include="Client\libs\bootstrap\js\" />
     <Folder Include="models\" />
     <Folder Include="controllers\" />
+    <Folder Include="obj\" />
+    <Folder Include="obj\Debug\" />
     <Folder Include="routes\" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
