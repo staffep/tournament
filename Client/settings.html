@@ -5,7 +5,7 @@
           <label>Previous tournaments</label>
         </li>
         <li ng-repeat="tournament in earliearTournaments | orderBy: '-Created_date' ">
-          <a href="http://localhost:3000/tournamentmode?ID={{tournament._id}}">{{tournament.name}}</a>
+          <a href="http://nhltournament.azurewebsites.net/tournamentmode?ID={{tournament._id}}">{{tournament.name}}</a>
         </li>
       </ul>
     </div>
