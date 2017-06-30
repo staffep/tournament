@@ -1,7 +1,7 @@
 
 <div ng-controller="PlayOffController as playoff">
   <div class="form-group">
-    <button class="btn btn-default" ng-show="playoff" ng-click="bracketButtonIsClicked = true; playoff.initBracket();" ng-init="playoff.initBracket();">Create bracket</button>
+    <button class="btn btn-default" ng-show="playoff" ng-click="bracketButtonIsClicked = true; initBracket();" ng-init="initBracket();">Create bracket</button>
   </div>
   <div ng-show="bracketButtonIsClicked">
     <main id="tournament" >
