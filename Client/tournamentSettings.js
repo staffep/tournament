@@ -230,7 +230,7 @@ myApp.service('_tournament', ['$http', 'globalVars', function ($http, globalVars
     this.post = function (settings, callback) {
         $http({
                 method: 'POST',
-                url: 'http://localhost:3000/tournament',
+                url: 'http://nhltournament.azurewebsites.net/tournament',
                 headers: { 'Content-Type': 'application/json' },
                 data: settings
             })
@@ -243,7 +243,7 @@ myApp.service('_tournament', ['$http', 'globalVars', function ($http, globalVars
     this.get = function (id, callback) {
         $http({
                 method: 'GET',
-                url: 'http://localhost:3000/tournament/' + id,
+                url: 'http://nhltournament.azurewebsites.net/tournament/' + id,
                 async: false,
                 headers: { 'Content-Type': 'application/json' }
             })
@@ -268,7 +268,7 @@ myApp.service('_tournament', ['$http', 'globalVars', function ($http, globalVars
 
         $http({
                 method: 'PUT',
-                url: 'http://localhost:3000/tournament/' + globalVars.settings.tournamentId.toString(),
+                url: 'http://nhltournament.azurewebsites.net/tournament/' + globalVars.settings.tournamentId.toString(),
                 data: globalVars.settings,
                 async: false,
                 headers: { 'Content-Type': 'application/json' }
@@ -287,7 +287,7 @@ myApp.service('_tournament', ['$http', 'globalVars', function ($http, globalVars
         globalVars.settings.bracket = angular.toJson(bracket);
         $http({
                 method: 'PUT',
-                url: 'http://localhost:3000/tournament/' + globalVars.settings.tournamentId.toString(),
+                url: 'http://nhltournament.azurewebsites.net/tournament/' + globalVars.settings.tournamentId.toString(),
                 data: globalVars.settings,
                 async: false,
                 headers: { 'Content-Type': 'application/json' }
@@ -304,7 +304,7 @@ myApp.service('_tournament', ['$http', 'globalVars', function ($http, globalVars
     this.getAll = function (callback) {
         $http({
                 method: 'GET',
-                url: 'http://localhost:3000/tournament',
+                url: 'http://nhltournament.azurewebsites.net/tournament',
                 headers: { 'Content-Type': 'application/json' }
             })
             .success(function (data) {
@@ -485,6 +485,13 @@ myApp.controller('TableController', ['$scope', '_tournament', 'globalVars', func
             }
 
             $scope.calcTable = function (homeTeam, awayTeam, game) {
+
+                if (typeof game.homeGoals === "object") {
+                    game.homeGoals = 0;
+                }
+                if (typeof game.awayGoals === "object") {
+                    game.awayGoals = 0;
+                }
                 
                 homeTeam.goalsForward = homeTeam.goalsForward + game.homeGoals;
                 homeTeam.goalsAgainst = homeTeam.goalsAgainst + game.awayGoals;
@@ -629,20 +636,21 @@ myApp.controller('PlayOffController', ['$scope', '_tournament', 'globalVars', '$
             $scope.showModal = false;
         };
 
-        this.initBracket = function() {
+        $scope.initBracket = function() {
             this.idFromParam = new URL(window.location.href).searchParams.get("ID");
             _tournament.get(this.idFromParam,
                 (function (response) {
-                    $scope.playoff = response.playoff;
-                    if (response.bracket === "") {
+                    if (response.bracket === "" || angular.fromJson(response.bracket).bracketStarted !== true){
                         $scope.createBracket(response);
-                    } else {
+                    }
+                    else {
                         $scope.bracket = angular.fromJson(response.bracket);
                     }
                 }));
         }
 
-        $scope.createBracket = function(response) {
+        $scope.createBracket = function (response) {
+            $scope.bracket.bracketStarted = true;
             $scope.bracket.playoffMeetings = response.playoffMeetings;
             this.firstRound = [];
 

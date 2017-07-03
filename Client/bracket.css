@@ -53,3 +53,11 @@ li.game-spacer{
 li.game-bottom{ 
     border-top:1px solid #aaa;
 }
+
+.modal-footer .btn-warning {
+    background-color: #2980b9;
+    border:none;
+}
+    .modal-footer .btn-warning:hover {
+        background-color: #2859b9;
+    }

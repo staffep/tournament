@@ -23,7 +23,7 @@ var GameSchema = new Schema({
     awayGoals: { type: Number },
     homeGoals: { type: Number },
     round: { type: Number },
-    gameNr: { type: Number },
+    gameNr: { type: Number },    
     awayTeam: {
         playername: { type: String },
         team: {
@@ -56,7 +56,8 @@ var GameSchema = new Schema({
         plusminus: { type: Number },
         points: { type: Number }
     },
-    gamePlayed: {type: Boolean}
+    gamePlayed: { type: Boolean },
+    ot: { type: Boolean }
 });
 
 var TournamentSchema = new Schema({

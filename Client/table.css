@@ -1,4 +1,11 @@
-﻿.teamLabel {
+﻿.tableController {
+    max-width: 800px;
+}
+    .tableController h2{
+        margin-top: 0px !important;
+        text-align: center;
+    }
+.teamLabel {
     width: 100px !important;
     border: none !important;
 }
