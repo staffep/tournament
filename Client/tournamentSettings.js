@@ -652,6 +652,7 @@ myApp.controller('PlayOffController', ['$scope', '_tournament', 'globalVars', '$
         $scope.createBracket = function (response) {
             $scope.bracket.bracketStarted = true;
             $scope.bracket.playoffMeetings = response.playoffMeetings;
+            $scope.bracket.winsToProceed = Math.round($scope.bracket.playoffMeetings / 2);
             this.firstRound = [];
 
             let playersArr = response.players.sort(function(a, b) {

@@ -13,12 +13,12 @@
     list-style:none;
     padding:0;
 }
-.round .spacer{ flex-grow:1; }
+.round .spacer{ flex-grow:0.5; }
 .round .spacer:first-child,
 .round .spacer:last-child{ flex-grow:.5; }
 
 .round .game-spacer{
-    flex-grow:1;
+    flex-grow:2 ;
 }
 
 /*
@@ -33,15 +33,17 @@ body{
 
 li.game{
     padding-left:20px;
+    cursor:pointer;
 }
 
 li.game.winner{
     font-weight:bold;
 }
-li.game span{
-    float:right;
-    margin-right:5px;
-}
+    li.game span {
+        float: right;
+        margin-right: 5px;
+        background-color: initial !important;
+    }
 
 li.game-top{ border-bottom:1px solid #aaa; }
 
@@ -54,10 +56,12 @@ li.game-bottom{
     border-top:1px solid #aaa;
 }
 
-.modal-footer .btn-warning {
+.modal-footer .btn {
     background-color: #2980b9;
     border:none;
+    color:white;
 }
-    .modal-footer .btn-warning:hover {
+    .modal-footer .btn:hover {
         background-color: #2859b9;
+        color: white;
     }

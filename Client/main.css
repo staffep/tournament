@@ -1,4 +1,4 @@
-﻿body,
+﻿body:not(.game),
 span {
     background-color: #f4f7f8 !important;
 }
