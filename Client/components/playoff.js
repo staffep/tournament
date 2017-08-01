@@ -29,7 +29,7 @@ myApp.controller('PlayOffController', ['$scope', '_tournament', 'globalVars', '$
 
             let index = 0;
             result.matchup.totalresults.forEach(function (gamesWon) {
-                if (gamesWon === Math.round(result.bracket.playoffMeetings / 2)) {
+                if (gamesWon >= Math.round(result.bracket.playoffMeetings / 2)) {
                     for (let i = 0; i < result.bracket.results.length; i++) {
                         for (let x = 0; x < result.bracket.results[i].length; x++) {
                             if (result.bracket.results[i][x].id === result.matchup.id) {
