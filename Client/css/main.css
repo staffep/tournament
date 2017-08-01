@@ -1,0 +1,11 @@
+﻿body:not(.game),
+span {
+    background-color: #f4f7f8 !important;
+}
+label, h2 {
+    color: #717171;
+}
+input,
+select {
+    background-color: #e8eeef !important;
+}

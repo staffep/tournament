@@ -1,0 +1,97 @@
+﻿
+<div ng-controller="TableController" class="tableController">
+  <h2>{{name}}</h2>
+  <div style="display:table" class="table">
+    <div style="display:table-row;">
+      <div style="display:table-cell;">
+        <a href="#">
+        </a>
+      </div>
+      <div style="display:table-cell;">
+        <a href="#">
+          Team
+        </a>
+      </div>
+      <div style="display:table-cell;">
+        <a href="#">
+          GP
+        </a>
+      </div>
+      <div style="display:table-cell;">
+        <a href="#">
+          W
+        </a>
+      </div>
+      <div style="display:table-cell;">
+        <a href="#">
+          L
+        </a>
+      </div>
+      <div style="display:table-cell;">
+        <a href="#">
+          T
+        </a>
+      </div>
+      <div style="display:table-cell;">
+        <a href="#">
+          OT
+        </a>
+      </div>
+      <div style="display:table-cell;">
+        <a href="#">
+          GF
+        </a>
+      </div>
+      <div style="display:table-cell;">
+        <a href="#">
+          GA
+        </a>
+      </div>
+      <div style="display:table-cell;">
+        <a href="#">
+          +/-
+        </a>
+      </div>
+      <div style="display:table-cell;">
+        <a href="#">
+          P
+        </a>
+      </div>
+    </div>
+
+    <div ng-repeat="player in playersArr | orderBy: '-plusminus' | orderBy : '-points'" style="display: table-row">
+      <div class="teamImage" style="display:table-cell; background-image: url(img/{{player.team.abbrevation}}.gif);"></div>
+      <div ng-class="teamsToPlayOff > $index ? 'proceed' : 'notProceed'" style="display:table-cell;">{{player.playername}}</div>
+      <div style="display:table-cell;">{{player.gamesplayed}}</div>
+      <div style="display:table-cell;">{{player.wins}}</div>
+      <div style="display:table-cell;">{{player.losses}}</div>
+      <div style="display:table-cell;">{{player.draws}}</div>
+      <div style="display:table-cell;">{{player.otLoss}}</div>
+      <div style="display:table-cell;">{{player.goalsForward}}</div>
+      <div style="display:table-cell;">{{player.goalsAgainst}}</div>
+      <div style="display:table-cell;">{{player.plusminus}}</div>
+      <div style="display:table-cell;">{{player.points}}</div>
+    </div>
+  </div>
+
+  <div style="display:table" class="table">
+    <div style="display:table-row;">
+      <div style="display:table-cell;"></div>
+      <div style="display:table-cell;"></div>
+      <div style="display:table-cell;text-align: center;">OT</div>
+      <div style="display:table-cell;"></div>
+      <div style="display:table-cell;"></div>
+    </div>
+    <div style="display:table-row; max-width: 460px;" class="input-group scoreRepeater" ng-repeat="game in games">
+      <span style="display:table-cell;" class="input-group-addon teamLabel">{{::game.homeTeam.playername}}</span>
+      <input style="display:table-cell;" type="number" class="form-control scoreLabel" min="0" ng-model="game.homeGoals" ng-change="calcScore(game, {{game}})" ng-model-options="{updateOn: 'blur'}">
+      <span style="display:table-cell;" class="input-group-addon">
+        <input type="checkbox" ng-model="game.ot" ng-change="calcScore(game, {{game}})">
+      </span>
+      <input style="display:table-cell;" type="number" class="form-control scoreLabel" min="0" ng-model="game.awayGoals" ng-change="calcScore(game, {{game}})" ng-model-options="{updateOn: 'blur'}">
+      <span style="display:table-cell;" class="input-group-addon teamLabel">{{::game.awayTeam.playername}}</span>
+    </div>
+    
+  </div>
+</div>
+

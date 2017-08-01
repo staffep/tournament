@@ -2,7 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\Client",
-    "\\Client\\libs"
+    "\\Client\\libs",
+    "\\models"
   ],
   "SelectedNode": "\\Client\\tournamentSettings.js",
   "PreviewInSolutionExplorer": false
