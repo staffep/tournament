@@ -8,58 +8,56 @@
         </a>
       </div>
       <div style="display:table-cell;">
-        <a href="#">
-          Team
-        </a>
+          Team        
       </div>
       <div style="display:table-cell;">
-        <a href="#">
+        <a href="#" ng-click="sortType = 'gamesplayed'; sortDir = !sortDir">
           GP
         </a>
       </div>
       <div style="display:table-cell;">
-        <a href="#">
+        <a href="#" ng-click="sortType = 'wins'; sortDir = !sortDir">
           W
         </a>
       </div>
       <div style="display:table-cell;">
-        <a href="#">
+        <a href="#" ng-click="sortType = 'losses'; sortDir = !sortDir">
           L
         </a>
       </div>
       <div style="display:table-cell;">
-        <a href="#">
+        <a href="#" ng-click="sortType = 'draws'; sortDir = !sortDir">
           T
         </a>
       </div>
-      <div style="display:table-cell;">
-        <a href="#">
+      <div style="display:table-cell;" >
+        <a href="#" ng-click="sortType = 'otLoss'; sortDir = !sortDir">
           OT
         </a>
       </div>
       <div style="display:table-cell;">
-        <a href="#">
+        <a href="#" ng-click="sortType = 'goalsForward'; sortDir = !sortDir">
           GF
         </a>
       </div>
       <div style="display:table-cell;">
-        <a href="#">
+        <a href="#" ng-click="sortType = 'goalsAgainst'; sortDir = !sortDir">
           GA
         </a>
       </div>
       <div style="display:table-cell;">
-        <a href="#">
+        <a href="#" ng-click="sortType = 'plusminus'; sortDir = !sortDir">
           +/-
         </a>
       </div>
       <div style="display:table-cell;">
-        <a href="#">
+        <a href="#" ng-click="sortType = 'points'; sortDir = !sortDir">
           P
         </a>
       </div>
     </div>
 
-    <div ng-repeat="player in playersArr | orderBy: '-plusminus' | orderBy : '-points'" style="display: table-row">
+    <div ng-repeat="player in playersArr | orderBy: '-plusminus' | orderBy : sortType:sortDir" style="display: table-row">
       <div class="teamImage" style="display:table-cell; background-image: url(img/{{player.team.abbrevation}}.gif);"></div>
       <div ng-class="teamsToPlayOff > $index ? 'proceed' : 'notProceed'" style="display:table-cell;">{{player.playername}}</div>
       <div style="display:table-cell;">{{player.gamesplayed}}</div>

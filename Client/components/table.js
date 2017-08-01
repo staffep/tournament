@@ -11,12 +11,15 @@ myApp.controller('TableController', ['$scope', '_tournament', 'globalVars', func
 
         if (globalVars.settings === null || typeof globalVars.settings != "undefined") {
 
+            $scope.sortDir = false;
             $scope.name = globalVars.settings.name;
             $scope.playersArr = globalVars.settings.players;
             this.fixures = [];
             $scope.games = globalVars.settings.games;
             $scope.teamsToPlayOff = globalVars.settings.teamsToPlayoff;
             this.groupFinished = false;
+            $scope.sortType = 'points';
+            $scope.sortDir = !$scope.sortDir;
 
             if ($scope.games.length === 0) {
                 this.RoundRobin = function (t) {
