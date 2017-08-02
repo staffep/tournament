@@ -1,0 +1,18 @@
+﻿[
+  {
+    "outputFile": "Client/css/bracket.css",
+    "inputFile": "Client/css/bracket.less"
+  },
+  {
+    "outputFile": "Client/css/settings.css",
+    "inputFile": "Client/css/settings.less"
+  },
+  {
+    "outputFile": "Client/css/table.css",
+    "inputFile": "Client/css/table.less"
+  },
+  {
+    "outputFile": "Client/css/main.css",
+    "inputFile": "Client/css/main.less"
+  }
+]

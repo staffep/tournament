@@ -1,0 +1,21 @@
+[
+  {
+    "outputFileName": "Client/components/bundle.js",
+    "inputFiles": [
+      "Client/components/modal.js",
+      "Client/components/playoff.js",
+      "Client/components/settings.js",
+      "Client/components/table.js"
+    ]
+  },
+  {
+    "outputFileName": "Client/bundle.js",
+    "inputFiles": [
+      "Client/services/services.js",
+      "Client/components/table.js",
+      "Client/components/settings.js",
+      "Client/components/playoff.js",
+      "Client/components/modal.js"
+    ]
+  }
+]

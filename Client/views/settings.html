@@ -37,7 +37,7 @@
       <div class="form-group">
         <label for="tournament-nr-of-players-to-playoff" class="col-sm-3">Teams to playoff</label>
         <div class="col-sm-3">
-          <select class="form-control" ng-model="finalTeamsToPlayOff" id="tournament-nr-of-players-to-playoff">
+          <select class="form-control" ng-init="teamsToPlayoff(qty);" ng-model="finalTeamsToPlayOff" id="tournament-nr-of-players-to-playoff">
             <option ng-repeat="nr in teamsToPlayOff">{{nr}}</option>
           </select>
         </div>

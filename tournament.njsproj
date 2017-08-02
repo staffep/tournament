@@ -29,12 +29,18 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Client\components\modal.js" />
+    <Compile Include="Client\components\playoff.js" />
+    <Compile Include="Client\components\settings.js" />
+    <Compile Include="Client\components\table.js" />
+    <Compile Include="routes\tournamentRoutes.js" />
     <Compile Include="Client\libs\bootstrap\js\bootstrap.js" />
     <Compile Include="Client\libs\bootstrap\js\bootstrap.min.js" />
     <Compile Include="Client\libs\bootstrap\js\npm.js" />
     <Compile Include="Client\libs\jquery-1.11.3.js" />
     <Compile Include="Client\libs\jquery.bracket.js" />
-    <Compile Include="Client\tournamentSettings.js" />
+    <Compile Include="Client\services\services.js" />
+    <Compile Include="Client\app.js" />
     <Compile Include="config.js" />
     <Compile Include="controllers\bracketController.js" />
     <Compile Include="controllers\tournamentController.js" />
@@ -43,11 +49,32 @@
     <Compile Include="models\tournamentModel.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="routes\tournamentRoutes.js">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="server.js" />
-    <Content Include="Client\bracket.css" />
+    <Content Include="Client\css\bracket.css" />
+    <Content Include="Client\css\bracket.less" />
+    <Content Include="Client\css\bracket.min.css" />
+    <Content Include="Client\css\main.css" />
+    <Content Include="Client\css\main.less" />
+    <Content Include="Client\css\main.min.css">
+      <SubType>Content</SubType>
+      <DependentUpon>Client\css\main.css</DependentUpon>
+    </Content>
+    <Content Include="Client\css\settings.css" />
+    <Content Include="Client\css\settings.less" />
+    <Content Include="Client\css\settings.min.css">
+      <SubType>Content</SubType>
+      <DependentUpon>Client\css\settings.css</DependentUpon>
+    </Content>
+    <Content Include="Client\css\table.css" />
+    <Content Include="Client\css\table.less" />
+    <Content Include="Client\css\table.min.css" />
+    <Content Include="Client\favicon\apple-touch-icon.png" />
+    <Content Include="Client\favicon\favicon-16x16.png" />
+    <Content Include="Client\favicon\favicon-32x32.png" />
+    <Content Include="Client\favicon\favicon.ico" />
+    <Content Include="Client\favicon\manifest.json" />
+    <Content Include="Client\favicon\mstile-150x150.png" />
+    <Content Include="Client\favicon\safari-pinned-tab.svg" />
     <Content Include="Client\img\ana.gif" />
     <Content Include="Client\img\ari.gif" />
     <Content Include="Client\img\bos.gif" />
@@ -96,23 +123,31 @@
     <Content Include="Client\libs\bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Client\libs\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Client\libs\jquery.bracket.min.css" />
-    <Content Include="Client\playoff.html" />
-    <Content Include="Client\playoffmodal.html" />
-    <Content Include="Client\settings.css" />
-    <Content Include="Client\settings.html" />
-    <Content Include="Client\table.css" />
-    <Content Include="Client\table.html" />
+    <Content Include="Client\views\playoff.html" />
+    <Content Include="Client\views\playoffmodal.html" />
+    <Content Include="Client\views\settings.html" />
+    <Content Include="Client\views\table.html" />
+    <None Include="compilerconfig.json" />
+    <Content Include="compilerconfig.json.defaults">
+      <SubType>Content</SubType>
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </Content>
     <Content Include="package.json" />
     <Content Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Client\" />
+    <Folder Include="Client\components\" />
+    <Folder Include="Client\css\" />
+    <Folder Include="Client\favicon\" />
     <Folder Include="Client\img\" />
     <Folder Include="Client\libs\" />
     <Folder Include="Client\libs\bootstrap\" />
     <Folder Include="Client\libs\bootstrap\css\" />
     <Folder Include="Client\libs\bootstrap\fonts\" />
     <Folder Include="Client\libs\bootstrap\js\" />
+    <Folder Include="Client\services\" />
+    <Folder Include="Client\views\" />
     <Folder Include="models\" />
     <Folder Include="controllers\" />
     <Folder Include="obj\" />

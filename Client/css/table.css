@@ -1,35 +1,34 @@
 ﻿.tableController {
-    max-width: 800px;
+  max-width: 800px;
 }
-    .tableController h2{
-        margin-top: 0px !important;
-        text-align: center;
-    }
+.tableController h2 {
+  margin-top: 0px !important;
+  text-align: center;
+}
 .teamLabel {
-    width: 100px !important;
-    border: none !important;
+  width: 100px !important;
+  border: none !important;
 }
 .scoreRepeater .scoreLabel:first-of-type {
-    border-top-left-radius: 4px !important;
-    border-bottom-left-radius: 4px !important;
+  border-top-left-radius: 4px !important;
+  border-bottom-left-radius: 4px !important;
 }
-
 .scoreRepeater .scoreLabel:last-of-type {
-    border-top-right-radius: 4px !important;
-    border-bottom-right-radius: 4px !important;
+  border-top-right-radius: 4px !important;
+  border-bottom-right-radius: 4px !important;
 }
 .table .proceed:after {
-    /*background-color: #2ecc71;*/
-    content: "*";
+  /*background-color: #2ecc71;*/
+  content: "*";
 }
 .table .notProceed {
-    /*background-color: #e74c3c;*/
+  /*background-color: #e74c3c;*/
 }
 .table .teamImage {
-    height: 30px;
-    width: 30px;
-    background-image: url(img/stanleycup2.png);
-    background-size: 25px;
-    background-repeat: no-repeat;
-    background-position: 0% 25%;
+  height: 30px;
+  width: 30px;
+  background-image: url(img/stanleycup2.png);
+  background-size: 25px;
+  background-repeat: no-repeat;
+  background-position: 0% 25%;
 }
