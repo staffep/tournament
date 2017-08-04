@@ -8,12 +8,15 @@
   <script src="libs\bootstrap\js\bootstrap.js"></script>
   <script src="libs\bootstrap\js\ui-bootstrap-tpls-2.5.0.js"></script>
   <script src="app.js"></script>
+
+    <link href="libs\bootstrap\css\bootstrap.css" rel="stylesheet">
   <script src="bundle.min.js"></script>
-  <link href="css/main.min.css" rel="stylesheet">
-  <!--<link href="css/bracket.css" rel="stylesheet">
+  <link href="css/main.css" rel="stylesheet">
+  <link href="css/bracket.css" rel="stylesheet">
   <link href="css/settings.css" rel="stylesheet">
-  <link href="css/table.css" rel="stylesheet">-->
-  <link href="libs\bootstrap\css\bootstrap.css" rel="stylesheet">
+  <link href="css/table.css" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Anton|Zilla+Slab|Zilla+Slab:700|Scada|Scada:700" rel="stylesheet">
 
   <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
@@ -24,9 +27,14 @@
   <title>
     NHL-turnering
   </title>
+   
+
 </head>
+
+
   <body>
-    <div ng-app="tournament" ng-controller="TournamentController">
+      <div class="header"><h1 class="mainTitle">Tournament</h1></div>
+    <div ng-app="tournament" ng-controller="TournamentController" class="tournamentcontent">
       <tournament-settings ng-if="currentStatus == 'settings'"></tournament-settings>
 
       <tournament-table ng-if="currentStatus == 'table'"></tournament-table>
