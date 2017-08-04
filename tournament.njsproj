@@ -29,6 +29,12 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Client\bundle.js" />
+    <Compile Include="Client\bundle.min.js">
+      <SubType>Code</SubType>
+      <DependentUpon>Client\bundle.js</DependentUpon>
+    </Compile>
+    <Compile Include="Client\components\bundle.min.js" />
     <Compile Include="Client\components\modal.js" />
     <Compile Include="Client\components\playoff.js" />
     <Compile Include="Client\components\settings.js" />
@@ -50,6 +56,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="server.js" />
+    <None Include="bundleconfig.json" />
     <Content Include="Client\css\bracket.css" />
     <Content Include="Client\css\bracket.less" />
     <Content Include="Client\css\bracket.min.css" />
