@@ -1,18 +1,4 @@
-﻿.form-wrapper {
-  width: 70%;
-  float: left;
-}
-.form-wrapper label {
-  margin-top: 7px;
-}
-.form-wrapper input[type="checkbox"] {
-  margin: 10px 0 0;
-}
-.createBtn {
-  padding-right: 15px !important;
-  padding-left: 15px !important;
-}
-.earlierTournaments {
+﻿.earlierTournaments {
   display: inline-block;
 }
 .sideNavContainer {
@@ -24,19 +10,18 @@
 .leftNavIcon.tournaments {
   height: 30px;
   width: 30px;
-  background-color: #2980b9;
+  background-color: #FF7324;
   background-image: url(../img/stanleycup2.png);
   background-size: 25px 25px;
   background-repeat: no-repeat;
   background-position: 58% 30%;
   float: left;
   z-index: 2;
-  border-radius: 0 0 0 10px;
   color: #717171;
   cursor: pointer;
 }
 .leftNavIcon.tournaments:hover {
-  background-color: #2859b9;
+  background-color: #CB6228;
 }
 .sideNavContainer.collapsed {
   transition-property: all;
@@ -74,4 +59,8 @@
 }
 .leftNavTitle label {
   margin-top: 4px;
+}
+.createBtn {
+  padding-right: 15px !important;
+  padding-left: 15px !important;
 }

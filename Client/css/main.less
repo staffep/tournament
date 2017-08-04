@@ -1,15 +1,94 @@
-﻿body:not(.game),
-span {
-    background-color: #f4f7f8 !important;
-}
-label, h2 {
-    color: #717171;
+﻿
+label, h2, .form-wrapper {
+    color: #B3B5B3;
 }
 input,
 select {
-    background-color: #e8eeef !important;
+    background-color: #eee !important;
 }
 
-@import 'bracket.less';
+
+html {
+    width: 100% !important;
+    background-color: #1d1d1d;
+}
+
+body {
+    width: 100vw;
+    text-align: center;
+    background-color: #404040;
+    font-family: 'Scada', serif;
+    font-weight: 300;
+    height: 100% !important;
+    color: #B3B5B3;
+}
+.header {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 30px;
+    background-color: #1d1d1d;
+}
+
+.btn {
+    border-radius: 0px;
+    background-color: #FF7324;
+    color: white;
+    border: none;
+}
+
+.tournamentcontent {
+    width: 49vw;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.mainTitle {
+    font-family: 'Scada', sans-serif;
+    font-size: 2vh;
+    padding-bottom: 2vh;
+    color: #CFD1CF;
+    padding: 0;
+    margin: 0 !important;
+    left: 10px;
+    position: absolute;
+    top: 6px;
+}
+
+
+
+.form-group {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.form-control{
+    border-radius: 0px;
+
+}
+
+input {
+    -webkit-box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
+    -moz-box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
+    box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
+    background: #202020;
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 0;
+}
+input[type=text]:focus,
+input[type=number]:focus,
+.form-control:focus !important,
+select:hover,
+textarea:focus {
+    box-shadow: 0 0 5px #FF7324;
+    border: 1px solid #FF7324;
+    outline: none;
+}
+
+/*@import 'bracket.less';
 @import 'table.less';
-@import 'settings.less';
+@import 'settings.less';*/
+

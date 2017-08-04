@@ -27,8 +27,6 @@
  *  General Styles
 */
 body {
-  font-family: sans-serif;
-  font-size: small;
   padding: 10px;
   line-height: 1.4em;
 }
@@ -54,6 +52,9 @@ li.game-spacer {
 li.game-bottom {
   border-top: 1px solid #aaa;
 }
+.modal-content {
+  background-color: rgba(255, 255, 255, 0.9);
+}
 .modal-footer .btn {
   background-color: #2980b9;
   border: none;
@@ -62,4 +63,7 @@ li.game-bottom {
 .modal-footer .btn:hover {
   background-color: #2859b9;
   color: white;
+}
+.playoffButton {
+  margin-top: 10px;
 }
