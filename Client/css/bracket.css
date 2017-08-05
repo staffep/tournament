@@ -43,25 +43,25 @@ li.game span {
   background-color: initial !important;
 }
 li.game-top {
-  border-bottom: 1px solid #aaa;
+  border-bottom: 1px solid #FF7324;
 }
 li.game-spacer {
-  border-right: 1px solid #aaa;
+  border-right: 1px solid #FF7324;
   min-height: 40px;
 }
 li.game-bottom {
-  border-top: 1px solid #aaa;
+  border-top: 1px solid #FF7324;
 }
 .modal-content {
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: #ffffff;
 }
 .modal-footer .btn {
-  background-color: #2980b9;
+  background-color: #FF7324;
   border: none;
   color: white;
 }
 .modal-footer .btn:hover {
-  background-color: #2859b9;
+  background-color: #CB6228;
   color: white;
 }
 .playoffButton {

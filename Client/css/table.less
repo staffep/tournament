@@ -38,6 +38,7 @@ width: auto;
     width: 30vw ;
     margin-left: auto;
     margin-right: auto;
+    padding: 2px;
 }
 
 
@@ -49,7 +50,17 @@ width: auto;
     font-weight: 700;
 }
 
-.tableHeader{
+.tableHeader, .tableHeader a {
     font-weight: 700;
+    color: #FF7324 !important;
+    text-decoration: none;
 
+    &:hover,
+    &:focus {
+        color: #CB6228 !important;
+        text-decoration: none;
+    }
 }
+
+
+
