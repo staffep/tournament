@@ -4,8 +4,8 @@ myApp.service('_tournament', ['$http', 'globalVars', function ($http, globalVars
     this.post = function (settings, callback) {
         $http({
                 method: 'POST',
-               // url: 'http://nhltournament.azurewebsites.net/tournament',
-                url: 'http://localhost:3000/tournament',
+                url: 'http://nhltournament.azurewebsites.net/tournament',
+                //url: 'http://localhost:3000/tournament',
                 headers: { 'Content-Type': 'application/json' },
                 data: settings
             })
@@ -18,8 +18,8 @@ myApp.service('_tournament', ['$http', 'globalVars', function ($http, globalVars
     this.get = function (id, callback) {
         $http({
                 method: 'GET',
-                //url: 'http://nhltournament.azurewebsites.net/tournament/' + id,
-                url: 'http://localhost:3000/tournament/' + id,
+                url: 'http://nhltournament.azurewebsites.net/tournament/' + id,
+                //url: 'http://localhost:3000/tournament/' + id,
                 async: false,
                 headers: { 'Content-Type': 'application/json' }
             })
@@ -44,8 +44,8 @@ myApp.service('_tournament', ['$http', 'globalVars', function ($http, globalVars
 
         $http({
                 method: 'PUT',
-                //url: 'http://nhltournament.azurewebsites.net/tournament/' + globalVars.settings.tournamentId.toString(),
-                url: 'http://localhost:3000/tournament/' + globalVars.settings.tournamentId.toString(),
+                url: 'http://nhltournament.azurewebsites.net/tournament/' + globalVars.settings.tournamentId.toString(),
+                //url: 'http://localhost:3000/tournament/' + globalVars.settings.tournamentId.toString(),
                 data: globalVars.settings,
                 async: false,
                 headers: { 'Content-Type': 'application/json' }
@@ -64,8 +64,8 @@ myApp.service('_tournament', ['$http', 'globalVars', function ($http, globalVars
         globalVars.settings.bracket = angular.toJson(bracket);
         $http({
                 method: 'PUT',
-                //url: 'http://nhltournament.azurewebsites.net/tournament/' + globalVars.settings.tournamentId.toString(),
-                url: 'http://localhost:3000/tournament/' + globalVars.settings.tournamentId.toString(),
+                url: 'http://nhltournament.azurewebsites.net/tournament/' + globalVars.settings.tournamentId.toString(),
+                //url: 'http://localhost:3000/tournament/' + globalVars.settings.tournamentId.toString(),
                 data: globalVars.settings,
                 async: false,
                 headers: { 'Content-Type': 'application/json' }
@@ -82,8 +82,8 @@ myApp.service('_tournament', ['$http', 'globalVars', function ($http, globalVars
     this.getAll = function (callback) {
         $http({
                 method: 'GET',
-                //url: 'http://nhltournament.azurewebsites.net/tournament',
-                url: 'http://localhost:3000/tournament',
+                url: 'http://nhltournament.azurewebsites.net/tournament',
+                //url: 'http://localhost:3000/tournament',
                 headers: { 'Content-Type': 'application/json' }
             })
             .success(function (data) {
