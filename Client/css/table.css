@@ -34,12 +34,23 @@
   width: 30vw ;
   margin-left: auto;
   margin-right: auto;
+  padding: 2px;
 }
 .otChecker {
   padding: 0px;
   text-align: center;
   font-weight: 700;
 }
-.tableHeader {
+.tableHeader,
+.tableHeader a {
   font-weight: 700;
+  color: #FF7324 !important;
+  text-decoration: none;
+}
+.tableHeader:hover,
+.tableHeader a:hover,
+.tableHeader:focus,
+.tableHeader a:focus {
+  color: #CB6228 !important;
+  text-decoration: none;
 }
